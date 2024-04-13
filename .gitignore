@@ -1,0 +1,21 @@
+# Directorios generados por el sistema de compilación
+/build/
+/captures/
+
+# Archivos de configuración de Android Studio y Gradle
+.gradle/
+.idea/
+local.properties
+
+# Archivos de construcción y configuración de proyectos de Android
+*.iml
+*.apk
+*.ap_
+*.log
+
+# Archivos de usuario y configuración local
+.idea/workspace.xml
+
+# Archivos temporales y de caché
+*.tmp
+*.jks
