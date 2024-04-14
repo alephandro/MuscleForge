@@ -1,11 +1,15 @@
 package com.example.gym;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.gym.internet.Client;
+
+import java.io.IOException;
+import java.net.Socket;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,8 +36,17 @@ public class LoginActivity extends AppCompatActivity {
                 // Por ejemplo:
                 //Intent intent = new Intent(LoginActivity.this, NextActivity.class);
                 //startActivity(intent);
-                DataBase.connectAndExecuteSQL("INSERT INTO usuarios" +
-                        "                           VALUES('luis', 51123546C)");
+
+                try {
+                    Socket socket = new Socket("88.27.144.170", 3306);
+                    Client client = new Client(socket, "MuscleUser");
+                    client.sendMessage("RAAAAAAAAAAH!");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                /*DataBase.connectAndExecuteSQL("INSERT INTO usuarios" +
+                        "                           VALUES('luis', 51123546C)");*/
             }
         });
     }

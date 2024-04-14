@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DataBase {
-    static String url = "jdbc:mysql://192.168.1.68:3306/MuscleForge";
+    static String url = "jdbc:mysql://88.27.144.170:3306/MuscleForge";
     static String user = "usuario1";
     static String password = "contrasenya";
 
