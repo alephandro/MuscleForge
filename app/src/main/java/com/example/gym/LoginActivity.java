@@ -32,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
                 // Por ejemplo:
                 //Intent intent = new Intent(LoginActivity.this, NextActivity.class);
                 //startActivity(intent);
+                DataBase.connectAndExecuteSQL("INSERT INTO usuarios" +
+                        "                           VALUES('luis', 51123546C)");
             }
         });
     }
