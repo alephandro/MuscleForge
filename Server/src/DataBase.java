@@ -24,9 +24,12 @@ public class DataBase {
                 case 'S': //SELECT
                     return myStatement.executeQuery(sql);
             }
+
+            myConnection.close();
         } catch (SQLException e) {
             System.out.println("ERROR in Database Connection: " + e);
         }
+
         return databaseResult;
     }
 }

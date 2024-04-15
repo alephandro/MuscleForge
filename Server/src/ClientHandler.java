@@ -31,17 +31,15 @@ public class ClientHandler implements Runnable {
         while(socket.isConnected()) {
             try {
                 String message = bufferedReader.readLine();
-                if(message == null)
+                System.out.println("1");
+                if(message == null) {
+                    System.out.println("es nul");
                     throw new IOException();
-                System.out.println(message);
-                ResultSet resultSet = DataBase.connectAndExecuteSQL(message);
-
-                while (resultSet.next()) {
-                    System.out.println(resultSet.getString("email"));
                 }
-
-                System.out.println("dsdas");
-
+                System.out.println("el mensaje es: " + message);
+                ResultSet resultSet = DataBase.connectAndExecuteSQL(message);
+                while(resultSet.next())
+                    System.out.println(resultSet.getString("email"));
                 //sendMessage(message);
             } catch (IOException | SQLException e) {
                 e.printStackTrace();

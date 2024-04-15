@@ -45,7 +45,6 @@ public class LoginActivity extends AppCompatActivity {
                     client.sendMessage("SELECT email, password FROM usuarios" +
                             " WHERE usuarios.email = '" + email + "'" +
                             " AND usuarios.password = '" + password + "';");
-                    client.close();
 
                     //Intent intent = new Intent(LoginActivity.this, NextActivity.class);
                     //startActivity(intent);
