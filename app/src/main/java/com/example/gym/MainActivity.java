@@ -5,12 +5,8 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.IOException;
-import java.net.Socket;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Aquí puedes agregar el código para registrarse
-                Toast.makeText(MainActivity.this, "Registrarme", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(intent);
             }
         });
     }

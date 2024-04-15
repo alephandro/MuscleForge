@@ -1,5 +1,8 @@
 import java.io.*;
 import java.net.Socket;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ClientHandler implements Runnable {
@@ -31,9 +34,17 @@ public class ClientHandler implements Runnable {
                 if(message == null)
                     throw new IOException();
                 System.out.println(message);
-                DataBase.connectAndExecuteSQL(message);
+                ResultSet resultSet = DataBase.connectAndExecuteSQL(message);
+
+                while (resultSet.next()) {
+                    System.out.println(resultSet.getString("email"));
+                }
+
+                System.out.println("dsdas");
+
                 //sendMessage(message);
-            } catch (IOException e) {
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
                 close();
                 break;
             }

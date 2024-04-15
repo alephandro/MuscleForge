@@ -35,10 +35,7 @@ public class Server {
     }
 
     public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("What port do you wish to host out of?");
-        ServerSocket serverSocket = new ServerSocket(scanner.nextInt());
-        Server server = new Server(serverSocket);
+        Server server = new Server(new ServerSocket(8888));
         server.startServer();
     }
 }

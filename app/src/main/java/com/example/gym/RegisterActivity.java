@@ -12,12 +12,12 @@ import com.example.gym.internet.Client;
 import java.io.IOException;
 import java.net.Socket;
 
-public class LoginActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
 
         Button buttonBack = findViewById(R.id.buttonBack);
         Button buttonNext = findViewById(R.id.buttonNext);
@@ -32,7 +32,6 @@ public class LoginActivity extends AppCompatActivity {
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 EditText editTextEmail = findViewById(R.id.editTextEmail);
                 EditText editTextPassword = findViewById(R.id.editTextPassword);
 
@@ -42,9 +41,7 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     Socket socket = new Socket("10.0.2.2", 8888);
                     Client client = new Client(socket, "MuscleUser");
-                    client.sendMessage("SELECT email, password FROM usuarios" +
-                            " WHERE usuarios.email = '" + email + "'" +
-                            " AND usuarios.password = '" + password + "';");
+                    client.sendMessage("INSERT INTO usuarios VALUES ('" + email + "', '" + password + "');");
                     client.close();
 
                     //Intent intent = new Intent(LoginActivity.this, NextActivity.class);
@@ -53,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+
             }
         });
     }

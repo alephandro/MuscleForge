@@ -12,13 +12,18 @@ public class DataBase {
     public static ResultSet connectAndExecuteSQL(String sql) {
 
         ResultSet databaseResult = null;
-        System.out.println("hola");
 
         try {
             Connection myConnection = DriverManager.getConnection(url, user, password);
             Statement myStatement = myConnection.createStatement();
-            myStatement.executeUpdate(sql);
 
+            switch(sql.charAt(0)) {
+                case 'I': //INSERT
+                    myStatement.executeUpdate(sql);
+                    break;
+                case 'S': //SELECT
+                    return myStatement.executeQuery(sql);
+            }
         } catch (SQLException e) {
             System.out.println("ERROR in Database Connection: " + e);
         }

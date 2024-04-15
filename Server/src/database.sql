@@ -3,6 +3,6 @@ CREATE SCHEMA MuscleForge;
 USE MuscleForge;
 
 CREATE TABLE usuarios (
-                          user varchar(50),
+                          email varchar(100),
                           password varchar(100)
 );

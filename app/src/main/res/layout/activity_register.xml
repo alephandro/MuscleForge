@@ -8,7 +8,7 @@
         android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Usuario"
+        android:hint="Correo electrónico"
         android:background="#80FFFFFF"
         android:padding="10dp"
         android:layout_centerInParent="true"
