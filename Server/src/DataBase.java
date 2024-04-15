@@ -5,9 +5,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DataBase {
-    static String url = "jdbc:mysql://88.27.144.170:3306/MuscleForge";
-    static String user = "usuario1";
-    static String password = "contrasenya";
+    static String url = "jdbc:mysql://localhost:3306/MuscleForge";
+    static String user = "root";
+    static String password = "";
 
     public static ResultSet connectAndExecuteSQL(String sql) {
 
@@ -17,7 +17,7 @@ public class DataBase {
         try {
             Connection myConnection = DriverManager.getConnection(url, user, password);
             Statement myStatement = myConnection.createStatement();
-            databaseResult = myStatement.executeQuery(sql);
+            myStatement.executeUpdate(sql);
 
         } catch (SQLException e) {
             System.out.println("ERROR in Database Connection: " + e);
