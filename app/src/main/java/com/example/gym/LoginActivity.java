@@ -38,15 +38,13 @@ public class LoginActivity extends AppCompatActivity {
                 //startActivity(intent);
 
                 try {
-                    Socket socket = new Socket("88.27.144.170", 3306);
+                    Socket socket = new Socket("88.27.144.170", 8888);
                     Client client = new Client(socket, "MuscleUser");
-                    client.sendMessage("RAAAAAAAAAAH!");
+                    client.sendMessage("INSERT INTO usuarios VALUES ('guille', 'guille');");
+                    client.close();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-
-                /*DataBase.connectAndExecuteSQL("INSERT INTO usuarios" +
-                        "                           VALUES('luis', 51123546C)");*/
             }
         });
     }

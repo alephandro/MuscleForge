@@ -28,7 +28,11 @@ public class ClientHandler implements Runnable {
         while(socket.isConnected()) {
             try {
                 String message = bufferedReader.readLine();
-                sendMessage(message);
+                if(message == null)
+                    throw new IOException();
+                System.out.println(message);
+                DataBase.connectAndExecuteSQL(message);
+                //sendMessage(message);
             } catch (IOException e) {
                 close();
                 break;

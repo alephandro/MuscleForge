@@ -1,10 +1,14 @@
 package com.example.gym.internet;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Client{
+public class Client {
 
     protected Socket socket;
     protected BufferedReader bufferedReader;
@@ -17,6 +21,7 @@ public class Client{
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.username = username;
+            sendMessage(username);
         } catch (IOException e) {
             close();
         }
@@ -24,9 +29,11 @@ public class Client{
 
     public void sendMessage(String message) {
         try {
-            bufferedWriter.write(username + ": " + message);
-            bufferedWriter.newLine();
-            bufferedWriter.flush();
+            if(socket.isConnected()) {
+                bufferedWriter.write(message);
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
         } catch (IOException e) {
             close();
         }
@@ -34,10 +41,6 @@ public class Client{
 
     public void sendMessages() {
         try {
-            bufferedWriter.write(username);
-            bufferedWriter.newLine();
-            bufferedWriter.flush();
-
             Scanner scanner = new Scanner(System.in);
             while (socket.isConnected()) {
                 String message = scanner.nextLine();
@@ -66,7 +69,7 @@ public class Client{
         }).start();
     }
 
-    protected void close() {
+    public void close() {
         try {
             if(bufferedReader != null)
                 bufferedReader.close();
