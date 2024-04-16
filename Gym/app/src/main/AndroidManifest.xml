@@ -16,6 +16,16 @@
         android:theme="@style/Theme.Gym"
         tools:targetApi="31">
         <activity
+            android:name=".ViewTrainingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_view_trainings"
+            android:theme="@style/Theme.Gym" />
+        <activity
+            android:name=".MainMenuActivity"
+            android:exported="false"
+            android:label="@string/title_activity_main_menu"
+            android:theme="@style/Theme.Gym" />
+        <activity
             android:name=".RegisterActivity"
             android:exported="false"
             android:label="@string/title_activity_register"
