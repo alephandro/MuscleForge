@@ -27,6 +27,7 @@ public class DetailedExerciseActivity extends AppCompatActivity {
 
     private LinearLayout seriesLayout;
     private int seriesCounter = 1;
+    private List<String> seriesList;
 
     @SuppressLint({"MissingInflatedId", "SetTextI18n"})
     @Override
@@ -34,6 +35,8 @@ public class DetailedExerciseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_exercise);
         seriesLayout = findViewById(R.id.seriesLayout);
+
+        seriesList = new ArrayList<>();
 
         Exercise exercise = (Exercise) getIntent().getSerializableExtra("exercise");
 
@@ -65,29 +68,23 @@ public class DetailedExerciseActivity extends AppCompatActivity {
             }
         });
 
-        Button buttonSave = new Button(this);
+        Button buttonSave = findViewById(id.buttonSave);
         buttonSave.setText("Guardar");
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<String> repetitionsList = new ArrayList<>();
-
-                // Iterar sobre los elementos dentro del LinearLayout
                 for (int i = 0; i < seriesLayout.getChildCount(); i++) {
                     View seriesView = seriesLayout.getChildAt(i);
                     if (seriesView instanceof LinearLayout) {
+                        String s;
                         LinearLayout seriesLayout = (LinearLayout) seriesView;
-                        EditText editTextRepetitions = (EditText) seriesLayout.getChildAt(i);
-                        String repetitions = editTextRepetitions.getText().toString();
-                        repetitionsList.add(repetitions);
+                        EditText reps = (EditText) seriesLayout.getChildAt(1);
+                        EditText weight = (EditText) seriesLayout.getChildAt(2);
+                        s = reps.getText().toString() + ", " + weight.getText().toString();
+                        seriesList.add(s);
                     }
                 }
-
-                StringBuilder sb = new StringBuilder();
-                for (String repetitions : repetitionsList) {
-                    sb.append(repetitions).append("\n");
-                }
-                Toast.makeText(getApplicationContext(), "Repeticiones:\n" + sb.toString(), Toast.LENGTH_SHORT).show();
+                System.out.println(seriesList);
             }
         });
 
