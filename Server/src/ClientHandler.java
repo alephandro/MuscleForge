@@ -31,17 +31,14 @@ public class ClientHandler implements Runnable {
         while(socket.isConnected()) {
             try {
                 String message = bufferedReader.readLine();
-                System.out.println("1");
-                if(message == null) {
-                    System.out.println("es nul");
+                if(message == null)
                     throw new IOException();
-                }
+
                 System.out.println("el mensaje es: " + message);
-                ResultSet resultSet = DataBase.connectAndExecuteSQL(message);
-                while(resultSet.next())
-                    System.out.println(resultSet.getString("email"));
+				handleSql(message);
+
                 //sendMessage(message);
-            } catch (IOException | SQLException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
                 close();
                 break;
@@ -49,27 +46,42 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    protected void sendMessage(String message) {
-        for(ClientHandler clientHandler : clientHandlers) {
-            try {
-                if(!clientHandler.equals(this)) {
-                    clientHandler.bufferedWriter.write(message);
-                    clientHandler.bufferedWriter.newLine();
-                    clientHandler.bufferedWriter.flush();
-                }
-            } catch (IOException e) {
-                close();
-            }
-        }
-    }
+	private void handleSql(String sql) {
 
-    protected void removeClientHandler() {
-        clientHandlers.remove(this);
-        sendMessage("[SERVER]: " + username + " has left the chat");
+		try {
+			switch (sql.toUpperCase().charAt(0)) {
+				case 'I':
+					int res = DataBase.executeInsert(sql);
+					System.out.println("The result from the insert is " + res);
+					break;
+				case 'S':
+					res = DataBase.executeQuery(sql);
+					if(res == 0)
+						System.out.println("Email or password incorrect (implement)");
+					else
+						System.out.println("Login accepted (implement)");
+					break;
+			}
+		} catch (SQLException e) {
+			String error = e.getLocalizedMessage();
+			System.out.println("pff" + e);
+			if(error.substring(0, error.indexOf(' ')).equals("Duplicate")) {
+				sendMessage("This email already exists");
+			}
+		}
+	}
+
+    protected void sendMessage(String message) {
+		try {
+			bufferedWriter.write(message);
+			bufferedWriter.newLine();
+			bufferedWriter.flush();
+		} catch (IOException e) {
+			close();
+		}
     }
 
     protected void close() {
-        removeClientHandler();
         try {
             if(bufferedReader != null)
                 bufferedReader.close();

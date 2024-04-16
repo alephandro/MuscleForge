@@ -9,27 +9,36 @@ public class DataBase {
     static String user = "root";
     static String password = "";
 
-    public static ResultSet connectAndExecuteSQL(String sql) {
+	public static int executeInsert(String sql) throws SQLException {
+		int res = 0;
+		try {
+			Connection myConnection = DriverManager.getConnection(url, user, password);
+			Statement myStatement = myConnection.createStatement();
+			res = myStatement.executeUpdate(sql);
+			myConnection.close();
+		} catch (SQLException e) {
+			System.out.println("ERROR in Database Connection: " + e);
+			throw e;
+		}
+		return res;
+	}
 
-        ResultSet databaseResult = null;
+	public static int executeQuery(String sql) throws SQLException {
+		int res = 0;
+		ResultSet databaseResult = null;
+		try {
+			Connection myConnection = DriverManager.getConnection(url, user, password);
+			Statement myStatement = myConnection.createStatement();
+			databaseResult = myStatement.executeQuery(sql);
 
-        try {
-            Connection myConnection = DriverManager.getConnection(url, user, password);
-            Statement myStatement = myConnection.createStatement();
+			while(databaseResult.next())
+				res = databaseResult.getRow();
 
-            switch(sql.charAt(0)) {
-                case 'I': //INSERT
-                    myStatement.executeUpdate(sql);
-                    break;
-                case 'S': //SELECT
-                    return myStatement.executeQuery(sql);
-            }
-
-            myConnection.close();
-        } catch (SQLException e) {
-            System.out.println("ERROR in Database Connection: " + e);
-        }
-
-        return databaseResult;
-    }
+			myConnection.close();
+		} catch (SQLException e) {
+			System.out.println("ERROR in Database Connection: " + e);
+			throw e;
+		}
+		return res;
+	}
 }

@@ -1,4 +1,4 @@
-package com.example.gym.internet;
+package com.example.gym.utils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

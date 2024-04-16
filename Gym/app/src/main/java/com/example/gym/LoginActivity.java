@@ -7,7 +7,8 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.gym.internet.Client;
+import com.example.gym.utils.Client;
+import com.example.gym.utils.HashUtils;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -44,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
                     Client client = new Client(socket, "MuscleUser");
                     client.sendMessage("SELECT email, password FROM usuarios" +
                             " WHERE usuarios.email = '" + email + "'" +
-                            " AND usuarios.password = '" + password + "';");
+                            " AND usuarios.password = '" + HashUtils.hashPassword(password) + "';");
 
                     //Intent intent = new Intent(LoginActivity.this, NextActivity.class);
                     //startActivity(intent);

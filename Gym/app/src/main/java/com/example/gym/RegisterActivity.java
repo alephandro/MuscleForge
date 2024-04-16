@@ -7,7 +7,8 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.gym.internet.Client;
+import com.example.gym.utils.Client;
+import com.example.gym.utils.HashUtils;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -41,8 +42,8 @@ public class RegisterActivity extends AppCompatActivity {
                 try {
                     Socket socket = new Socket("10.0.2.2", 8888);
                     Client client = new Client(socket, "MuscleUser");
-                    client.sendMessage("INSERT INTO usuarios VALUES ('" + email + "', '" + password + "');");
-                    client.close();
+                    client.sendMessage("INSERT INTO usuarios VALUES ('" + email + "', '" + HashUtils.hashPassword(password) + "');");
+                    //client.close();
 
                     //Intent intent = new Intent(LoginActivity.this, NextActivity.class);
                     //startActivity(intent);
