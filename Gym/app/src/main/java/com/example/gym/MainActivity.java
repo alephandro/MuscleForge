@@ -20,11 +20,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Obtener referencia a los botones
         Button buttonSignIn = findViewById(R.id.buttonSignIn);
         Button buttonRegister = findViewById(R.id.buttonRegister);
 
-        // Configurar el OnClickListener para los botones
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

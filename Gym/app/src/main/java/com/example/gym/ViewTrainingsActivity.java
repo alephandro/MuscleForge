@@ -1,8 +1,7 @@
 package com.example.gym;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -57,5 +56,15 @@ public class ViewTrainingsActivity extends AppCompatActivity {
         adapter = new WorkoutAdapter(trainings);
         recyclerView.setAdapter(adapter);
 
+        adapter.setOnItemClickListener(new WorkoutAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Exercise exercise) {
+                // Abrir la nueva actividad cuando se hace clic en un elemento de la lista
+                Intent intent = new Intent(ViewTrainingsActivity.this,
+                        DetailedExerciseActivity.class);
+                intent.putExtra("exercise", exercise);
+                startActivity(intent);
+            }
+        });
     }
 }

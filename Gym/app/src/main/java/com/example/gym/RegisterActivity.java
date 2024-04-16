@@ -5,12 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.gym.utils.Client;
 import com.example.gym.utils.HashUtils;
-
 import java.io.IOException;
 import java.net.Socket;
 
@@ -27,7 +24,7 @@ public class RegisterActivity extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish(); // Regresar a la actividad anterior
+                finish();
             }
         });
 

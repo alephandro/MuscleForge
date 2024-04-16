@@ -18,6 +18,15 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.Entrenam
     public WorkoutAdapter(List<Exercise> entrenamientos) {
         this.exercises = entrenamientos;
     }
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(Exercise exercise);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     @NonNull
     @Override
@@ -30,6 +39,15 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.Entrenam
     public void onBindViewHolder(@NonNull EntrenamientoViewHolder holder, int position) {
         Exercise exercise = exercises.get(position);
         holder.bind(exercise);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onItemClick(exercise);
+                }
+            }
+        });
     }
 
     @Override

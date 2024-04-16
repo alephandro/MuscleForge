@@ -1,9 +1,17 @@
 package com.example.gym.utils;
 
-public class Exercise {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+import java.io.Serializable;
+
+public class Exercise implements Serializable {
 
     private String name;
     private String muscleGroup;
+    private String description;
 
 
     public Exercise(String name, String muscleGroup) {
@@ -17,5 +25,9 @@ public class Exercise {
 
     public String getMuscleGroup() {
         return muscleGroup;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

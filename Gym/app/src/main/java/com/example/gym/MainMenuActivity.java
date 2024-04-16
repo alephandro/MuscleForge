@@ -21,8 +21,6 @@ public class MainMenuActivity extends AppCompatActivity {
         buttonAddTraining.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Agregar lógica para abrir la actividad de añadir entrenamiento
-                // Por ejemplo:
                 //startActivity(new Intent(MainMenuActivity.this, AddTrainingActivity.class));
             }
         });
@@ -30,8 +28,6 @@ public class MainMenuActivity extends AppCompatActivity {
         buttonViewTrainings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Agregar lógica para abrir la actividad de consultar entrenamientos
-                // Por ejemplo:
                 startActivity(new Intent(MainMenuActivity.this, ViewTrainingsActivity.class));
             }
         });
@@ -39,8 +35,6 @@ public class MainMenuActivity extends AppCompatActivity {
         buttonDeleteTraining.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Agregar lógica para abrir la actividad de eliminar entrenamiento
-                // Por ejemplo:
                 //startActivity(new Intent(MainMenuActivity.this, DeleteTrainingActivity.class));
             }
         });
