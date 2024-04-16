@@ -1,8 +1,6 @@
 package com.example.gym;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputType;
@@ -64,7 +62,7 @@ public class DetailedExerciseActivity extends AppCompatActivity {
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addSeries(); // Agregar una nueva serie cuando se presiona el botón "+"
+                addSeries();
             }
         });
 
