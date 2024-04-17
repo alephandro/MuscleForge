@@ -17,15 +17,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R.id;
 import com.example.gym.utils.Exercise;
+import com.example.gym.utils.Series;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DetailedExerciseActivity extends AppCompatActivity {
 
+    private Exercise exercise;
     private LinearLayout seriesLayout;
     private int seriesCounter = 1;
-    private List<String> seriesList;
+    private List<Series> seriesList;
 
     @SuppressLint({"MissingInflatedId", "SetTextI18n"})
     @Override
@@ -36,7 +38,7 @@ public class DetailedExerciseActivity extends AppCompatActivity {
 
         seriesList = new ArrayList<>();
 
-        Exercise exercise = (Exercise) getIntent().getSerializableExtra("exercise");
+        exercise = (Exercise) getIntent().getSerializableExtra("exercise");
 
         TextView textViewNombre = findViewById(id.textViewName);
         TextView textViewGrupoMuscular = findViewById(R.id.textViewMuscleGroup);
@@ -48,15 +50,6 @@ public class DetailedExerciseActivity extends AppCompatActivity {
             textViewGrupoMuscular.setText(exercise.getMuscleGroup());
             textViewDescription.setText("Descripción del ejercicio: " + exercise.getDescription());
         }
-
-        Button buttonSelect = findViewById(R.id.buttonSelect);
-        buttonSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(DetailedExerciseActivity.this, "Error: feo",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
 
         Button buttonAdd = findViewById(R.id.buttonAdd);
         buttonAdd.setOnClickListener(new View.OnClickListener() {
@@ -74,15 +67,19 @@ public class DetailedExerciseActivity extends AppCompatActivity {
                 for (int i = 0; i < seriesLayout.getChildCount(); i++) {
                     View seriesView = seriesLayout.getChildAt(i);
                     if (seriesView instanceof LinearLayout) {
-                        String s;
+                        Series series;
                         LinearLayout seriesLayout = (LinearLayout) seriesView;
                         EditText reps = (EditText) seriesLayout.getChildAt(1);
                         EditText weight = (EditText) seriesLayout.getChildAt(2);
-                        s = reps.getText().toString() + ", " + weight.getText().toString();
-                        seriesList.add(s);
+                        series = new Series(exercise, reps.getText().toString(),
+                                weight.getText().toString());
+                        seriesList.add(series);
                     }
                 }
                 System.out.println(seriesList);
+                Toast.makeText(DetailedExerciseActivity.this, "Guardado correctamente!",
+                        Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
 

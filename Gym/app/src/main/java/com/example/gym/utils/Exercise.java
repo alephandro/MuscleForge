@@ -14,9 +14,10 @@ public class Exercise implements Serializable {
     private String description;
 
 
-    public Exercise(String name, String muscleGroup) {
+    public Exercise(String name, String muscleGroup, String description) {
         this.name = name;
         this.muscleGroup = muscleGroup;
+        this.description = description;
     }
 
     public String getName() {

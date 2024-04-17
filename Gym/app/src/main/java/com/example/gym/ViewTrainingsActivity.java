@@ -2,6 +2,8 @@ package com.example.gym;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,16 +26,29 @@ public class ViewTrainingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_trainings);
 
-        // Configurar RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+        Button buttonBack = findViewById(R.id.buttonBack);
+
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         // Inicializar lista de entrenamientos
         trainings = new ArrayList<>();
 
         /**IMPLEMENTAR LOGICA DE LLENAR ARRAYLIST**/
 
-        Exercise ej1 = new Exercise("Flexiones", "Pecho");
+        Exercise ej1 = new Exercise("Flexiones", "Pecho", "Lorem ipsum " +
+                "dolor sit amet, consectetur adipiscing elit. Suspendisse eu molestie orci. Sed vel " +
+                "est tempus, ultrices enim at, suscipit ligula. Curabitur non sapien vitae l" +
+                "orem commodo consequat id porttitor quam. Maecenas imperdiet congue dolor, vitae " +
+                "vestibulum nulla sollicitudin in. Suspendisse et.");
 
         trainings.add(ej1);
         trainings.add(ej1);

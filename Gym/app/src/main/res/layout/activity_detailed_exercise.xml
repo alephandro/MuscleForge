@@ -20,22 +20,13 @@
 
     <TextView
         android:id="@+id/textViewDescription"
-        android:layout_width="376dp"
-        android:layout_height="112dp"
+        android:layout_width="384dp"
+        android:layout_height="181dp"
         android:layout_below="@id/textViewMuscleGroup"
         android:layout_marginTop="16dp"
         android:text="Descripción del ejercicio:"
         android:textSize="18sp"
         android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/buttonSelect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Seleccionar"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp"/>
 
     <Button
         android:id="@+id/buttonSave"
@@ -59,7 +50,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/buttonSelect"
+        android:layout_above="@id/buttonSave"
         android:layout_below="@id/buttonAdd"
         android:layout_marginTop="16dp">
 
