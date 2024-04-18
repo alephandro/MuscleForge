@@ -7,8 +7,8 @@ import java.sql.Statement;
 
 public class DataBase {
     static String url = "jdbc:mysql://localhost:3306/MuscleForge";
-    static String user = "root";
-    static String password = "";
+    static String user = "rana";
+    static String password = "rana";
 	static String rutaBackup = "backup.sql";
 
 	public static int executeInsert(String sql) throws SQLException {
