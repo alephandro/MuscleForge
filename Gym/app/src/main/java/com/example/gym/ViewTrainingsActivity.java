@@ -9,9 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.gym.utils.Client;
 import com.example.gym.utils.Exercise;
 import com.example.gym.utils.WorkoutAdapter;
 
+import java.io.IOException;
+import java.net.Socket;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +34,26 @@ public class ViewTrainingsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        trainings = new ArrayList<>();
+
+        try {
+            Socket socket = new Socket("10.0.2.2", 8888);
+            Client client = new Client(socket);
+            Object object = client.sendMessage(
+                    "SELECT * FROM exercises");
+            client.close();
+
+            System.out.println(object);
+
+            if(object.getClass().equals(ArrayList.class)) {
+                System.out.println("ei");
+                this.trainings = (ArrayList) object;
+            }
+
+        } catch (IOException  e) {
+            throw new RuntimeException(e);
+        }
+
 
         Button buttonBack = findViewById(R.id.buttonBack);
 
@@ -39,34 +64,6 @@ public class ViewTrainingsActivity extends AppCompatActivity {
             }
         });
 
-        // Inicializar lista de entrenamientos
-        trainings = new ArrayList<>();
-
-        /**IMPLEMENTAR LOGICA DE LLENAR ARRAYLIST**/
-
-        Exercise ej1 = new Exercise("Flexiones", "Pecho", "Lorem ipsum " +
-                "dolor sit amet, consectetur adipiscing elit. Suspendisse eu molestie orci. Sed vel " +
-                "est tempus, ultrices enim at, suscipit ligula. Curabitur non sapien vitae l" +
-                "orem commodo consequat id porttitor quam. Maecenas imperdiet congue dolor, vitae " +
-                "vestibulum nulla sollicitudin in. Suspendisse et.");
-
-        trainings.add(ej1);
-        trainings.add(ej1);
-        trainings.add(ej1);
-        trainings.add(ej1);
-        trainings.add(ej1);
-        trainings.add(ej1);
-        trainings.add(ej1);
-        trainings.add(ej1);
-        trainings.add(ej1);
-        trainings.add(ej1);
-        trainings.add(ej1);
-        trainings.add(ej1);
-        trainings.add(ej1);
-        trainings.add(ej1);
-        trainings.add(ej1);
-        trainings.add(ej1);
-        trainings.add(ej1);
 
         adapter = new WorkoutAdapter(trainings);
         recyclerView.setAdapter(adapter);

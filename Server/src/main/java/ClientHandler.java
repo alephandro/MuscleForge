@@ -59,8 +59,9 @@ public class ClientHandler implements Runnable {
 					sendMessage(res + "");
 					break;
 				case 'S':
-					if(sql.equals("SELECT * FROM exercises")){
+					if(sql.length() == 24){
 						List<Exercise> exercises = DataBase.executeQueryExercises(sql);
+						System.out.println(exercises);
 						sendObject(exercises);
 					} else {
 						res = DataBase.executeQuery(sql);
