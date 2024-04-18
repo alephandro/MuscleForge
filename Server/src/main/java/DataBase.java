@@ -1,16 +1,14 @@
+import com.example.gym.utils.Exercise;
+
 import java.io.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataBase {
     static String url = "jdbc:mysql://localhost:3306/MuscleForge";
-    static String user = "rana";
-    static String password = "rana";
+    static String user = "root";
+    static String password = "";
 	static String rutaBackup = "backup.sql";
 
 	public static int executeInsert(String sql) throws SQLException {
@@ -73,6 +71,7 @@ public class DataBase {
 			System.out.println("ERROR in Database Connection: " + e);
 			throw e;
 		}
+
 		return result;
 	}
 

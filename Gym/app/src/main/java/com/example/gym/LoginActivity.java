@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.utils.Client;
 import com.example.gym.utils.HashUtils;
+import com.example.gym.utils.Networking;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -42,34 +43,28 @@ public class LoginActivity extends AppCompatActivity {
                 String email = editTextEmail.getText().toString();
                 String password = editTextPassword.getText().toString();
 
-                try {
-                    Socket socket = new Socket("34.175.52.16", 8888);
-                    Client client = new Client(socket);
-                    Object object = client.sendMessage(
-                            "SELECT email, password FROM users" +
-                            " WHERE users.email = '" + email + "'" +
-                            " AND users.password = '" + HashUtils.hashPassword(password) + "';");
-                    client.close();
+                Client client = new Client();
+                Object object = client.sendMessage(
+                        "SELECT email, password FROM users" +
+                        " WHERE users.email = '" + email + "'" +
+                        " AND users.password = '" + HashUtils.hashPassword(password) + "';");
+                client.close();
 
-                    boolean bool = false;
-                    String error = "Default Error";
-                    if(object.getClass().equals(String.class)) { //Android studio no me deja meter un JDK para hacer instanceof
-                        String string = (String)object;          //ME CAGO EN GOOGLE
-                        if(string.equals("Email or password incorrect")) {
-                            error = string;
-                        } else if(string.equals("Login accepted")) {
-                            bool = true;
-                        }
+                boolean bool = false;
+                String error = "Default Error";
+                if(object.getClass().equals(String.class)) { //Android studio no me deja meter un JDK para hacer instanceof
+                    String string = (String)object;          //ME CAGO EN GOOGLE
+                    if(string.equals("Email or password incorrect")) {
+                        error = string;
+                    } else if(string.equals("Login accepted")) {
+                        bool = true;
                     }
-
-                    if(bool)
-                        startActivity(new Intent(LoginActivity.this, MainMenuActivity.class));
-                    else
-                        Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show();
-
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
                 }
+
+                if(bool)
+                    startActivity(new Intent(LoginActivity.this, MainMenuActivity.class));
+                else
+                    Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         });
     }

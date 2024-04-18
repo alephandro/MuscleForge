@@ -39,34 +39,26 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = editTextEmail.getText().toString();
                 String password = editTextPassword.getText().toString();
 
-                try {
-                    Socket socket = new Socket("34.175.52.16", 8888);
-                    Client client = new Client(socket);
-                    Object object = client.sendMessage("INSERT INTO users VALUES ('" + email + "', '" + HashUtils.hashPassword(password) + "');");
-                    client.close();
+                Client client = new Client();
+                Object object = client.sendMessage("INSERT INTO users VALUES ('" + email + "', '" + HashUtils.hashPassword(password) + "');");
+                client.close();
 
-                    boolean bool = false;
-                    String error = "Default Error";
-                    if(object.getClass().equals(String.class)) { //Android studio no me deja meter un JDK para hacer instanceof
-                        String string = (String)object;          //ME CAGO EN GOOGLE
-                        System.out.println("!" + string + "!");
-                        if(string.equals("This email already exists")) {
-                            error = string;
-                        } else if(string.equals("1")) {
-                            bool = true;
-                        }
+                boolean bool = false;
+                String error = "Default Error";
+                if(object.getClass().equals(String.class)) { //Android studio no me deja meter un JDK para hacer instanceof
+                    String string = (String)object;          //ME CAGO EN GOOGLE
+                    System.out.println("!" + string + "!");
+                    if(string.equals("This email already exists")) {
+                        error = string;
+                    } else if(string.equals("1")) {
+                        bool = true;
                     }
-
-                    if(bool)
-                        startActivity(new Intent(RegisterActivity.this, MainMenuActivity.class));
-                    else
-                        Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_SHORT).show();
-
-
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
                 }
 
+                if(bool)
+                    startActivity(new Intent(RegisterActivity.this, MainMenuActivity.class));
+                else
+                    Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         });
     }

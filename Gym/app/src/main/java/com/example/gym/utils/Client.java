@@ -9,9 +9,9 @@ public class Client {
     protected ObjectInputStream objectInputStream;
     protected ObjectOutputStream objectOutputStream;
 
-    public Client(Socket socket) {
+    public Client() {
         try {
-            this.socket = socket;
+            this.socket = new Socket(Networking.IP, Networking.Port);
             this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             this.objectInputStream = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
@@ -29,6 +29,7 @@ public class Client {
                 object = objectInputStream.readObject();
             }
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
             close();
         }
         return object;

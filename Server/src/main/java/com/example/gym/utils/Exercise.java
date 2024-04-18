@@ -1,3 +1,5 @@
+package com.example.gym.utils;
+
 import java.io.Serializable;
 
 public class Exercise implements Serializable {

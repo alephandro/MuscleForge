@@ -1,7 +1,9 @@
-import java.io.*;
+import com.example.gym.utils.Exercise;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +63,6 @@ public class ClientHandler implements Runnable {
 				case 'S':
 					if(sql.length() == 24){
 						List<Exercise> exercises = DataBase.executeQueryExercises(sql);
-						System.out.println(exercises);
 						sendObject(exercises);
 					} else {
 						res = DataBase.executeQuery(sql);

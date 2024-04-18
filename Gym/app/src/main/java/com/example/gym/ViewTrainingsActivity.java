@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gym.utils.Client;
 import com.example.gym.utils.Exercise;
+import com.example.gym.utils.Networking;
 import com.example.gym.utils.WorkoutAdapter;
 
 import java.io.IOException;
@@ -36,24 +37,18 @@ public class ViewTrainingsActivity extends AppCompatActivity {
 
         trainings = new ArrayList<>();
 
-        try {
-            Socket socket = new Socket("10.0.2.2", 8888);
-            Client client = new Client(socket);
-            Object object = client.sendMessage(
-                    "SELECT * FROM exercises");
-            client.close();
+        Client client = new Client();
+        Object object = client.sendMessage(
+                "SELECT * FROM exercises");
+        client.close();
 
-            System.out.println(object);
+        System.out.println("!Flag");
+        System.out.println(object.getClass());
 
-            if(object.getClass().equals(ArrayList.class)) {
-                System.out.println("ei");
-                this.trainings = (ArrayList) object;
-            }
-
-        } catch (IOException  e) {
-            throw new RuntimeException(e);
+        if(object.getClass().equals(ArrayList.class)) {
+            System.out.println("ei");
+            this.trainings = (ArrayList) object;
         }
-
 
         Button buttonBack = findViewById(R.id.buttonBack);
 

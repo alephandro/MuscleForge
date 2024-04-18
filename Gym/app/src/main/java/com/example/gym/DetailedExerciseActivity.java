@@ -48,7 +48,7 @@ public class DetailedExerciseActivity extends AppCompatActivity {
         if (exercise != null) {
             textViewNombre.setText(exercise.getName());
             textViewGrupoMuscular.setText(exercise.getMuscleGroup());
-            textViewDescription.setText("Descripción del ejercicio: " + exercise.getDescription());
+            textViewDescription.setText(exercise.getDescription());
         }
 
         Button buttonAdd = findViewById(R.id.buttonAdd);
