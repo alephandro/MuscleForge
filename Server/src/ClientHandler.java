@@ -9,18 +9,15 @@ public class ClientHandler implements Runnable {
 
     protected static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
     protected Socket socket;
-    protected BufferedReader bufferedReader;
-    protected BufferedWriter bufferedWriter;
-    protected String username;
+	private ObjectOutputStream objectOutputStream;
+	private ObjectInputStream objectInputStream;
 
     public ClientHandler(Socket socket) {
         try {
             this.socket = socket;
-            this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            this.username = bufferedReader.readLine();
+            this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            this.objectInputStream = new ObjectInputStream(socket.getInputStream());
             clientHandlers.add(this);
-            sendMessage("[SERVER]: " + username + " has joined the chat");
         } catch (IOException e) {
             close();
         }
@@ -28,38 +25,44 @@ public class ClientHandler implements Runnable {
 
     @Override
     public void run() {
-        while(socket.isConnected()) {
-            try {
-                String message = bufferedReader.readLine();
-                if(message == null)
-                    throw new IOException();
-
-                System.out.println("el mensaje es: " + message);
-				handleSql(message);
-
-                //sendMessage(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-                close();
-                break;
-            }
-        }
+        receiveObjects();
     }
 
-	private void handleSql(String sql) {
+	private void receiveObjects() {
+		while(socket.isConnected()) {
+			try {
+				Object object = objectInputStream.readObject();
+				handleObjects(object);
+			} catch (IOException | ClassNotFoundException e) {
+				e.printStackTrace();
+				close();
+				break;
+			}
+		}
+	}
 
+	private void handleObjects(Object object) {
+		if(object instanceof String string)
+			handleSql(string);
+		else if (object instanceof Exercise exercise)
+			System.out.printf("Hacer algo");
+	}
+
+	private void handleSql(String sql) {
+		System.out.println(sql);
 		try {
 			switch (sql.toUpperCase().charAt(0)) {
 				case 'I':
 					int res = DataBase.executeInsert(sql);
 					System.out.println("The result from the insert is " + res);
+					sendMessage(res + "");
 					break;
 				case 'S':
 					res = DataBase.executeQuery(sql);
 					if(res == 0)
-						System.out.println("Email or password incorrect (implement)");
+						sendMessage("Email or password incorrect");
 					else
-						System.out.println("Login accepted (implement)");
+						sendMessage("Login accepted");
 					break;
 			}
 		} catch (SQLException e) {
@@ -73,9 +76,10 @@ public class ClientHandler implements Runnable {
 
     protected void sendMessage(String message) {
 		try {
-			bufferedWriter.write(message);
-			bufferedWriter.newLine();
-			bufferedWriter.flush();
+			if(socket.isConnected()) {
+				objectOutputStream.writeObject(message);
+				objectOutputStream.flush();
+			}
 		} catch (IOException e) {
 			close();
 		}
@@ -83,10 +87,10 @@ public class ClientHandler implements Runnable {
 
     protected void close() {
         try {
-            if(bufferedReader != null)
-                bufferedReader.close();
-            if(bufferedWriter != null)
-                bufferedWriter.close();
+            if(objectOutputStream != null)
+				objectOutputStream.close();
+            if(objectInputStream != null)
+                objectInputStream.close();
             if(socket != null)
                 socket.close();
         } catch (IOException e) {

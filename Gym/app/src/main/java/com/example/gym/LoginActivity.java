@@ -44,20 +44,28 @@ public class LoginActivity extends AppCompatActivity {
 
                 try {
                     Socket socket = new Socket("10.0.2.2", 8888);
-                    Client client = new Client(socket, "MuscleUser");
-                    client.sendMessage("SELECT email, password FROM usuarios" +
-                            " WHERE usuarios.email = '" + email + "'" +
-                            " AND usuarios.password = '" + HashUtils.hashPassword(password) + "';");
+                    Client client = new Client(socket);
+                    Object object = client.sendMessage(
+                            "SELECT email, password FROM users" +
+                            " WHERE users.email = '" + email + "'" +
+                            " AND users.password = '" + HashUtils.hashPassword(password) + "';");
+                    client.close();
 
-                    /**IMPLEMENTAR LOGICA DE RECIBIR EL MENSAJE*/
-
-                    boolean bool = true;
+                    boolean bool = false;
+                    String error = "Default Error";
+                    if(object.getClass().equals(String.class)) { //Android studio no me deja meter un JDK para hacer instanceof
+                        String string = (String)object;          //ME CAGO EN GOOGLE
+                        if(string.equals("Email or password incorrect")) {
+                            error = string;
+                        } else if(string.equals("Login accepted")) {
+                            bool = true;
+                        }
+                    }
 
                     if(bool)
                         startActivity(new Intent(LoginActivity.this, MainMenuActivity.class));
                     else
-                        Toast.makeText(LoginActivity.this, "Error: feo",
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show();
 
                 } catch (IOException e) {
                     throw new RuntimeException(e);

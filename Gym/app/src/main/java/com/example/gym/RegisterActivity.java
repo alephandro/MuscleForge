@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.gym.utils.Client;
 import com.example.gym.utils.HashUtils;
@@ -39,12 +41,27 @@ public class RegisterActivity extends AppCompatActivity {
 
                 try {
                     Socket socket = new Socket("10.0.2.2", 8888);
-                    Client client = new Client(socket, "MuscleUser");
-                    client.sendMessage("INSERT INTO usuarios VALUES ('" + email + "', '" + HashUtils.hashPassword(password) + "');");
-                    //client.close();
+                    Client client = new Client(socket);
+                    Object object = client.sendMessage("INSERT INTO users VALUES ('" + email + "', '" + HashUtils.hashPassword(password) + "');");
+                    client.close();
 
-                    startActivity(new Intent(RegisterActivity.this,
-                            MainMenuActivity.class));
+                    boolean bool = false;
+                    String error = "Default Error";
+                    if(object.getClass().equals(String.class)) { //Android studio no me deja meter un JDK para hacer instanceof
+                        String string = (String)object;          //ME CAGO EN GOOGLE
+                        System.out.println("!" + string + "!");
+                        if(string.equals("This email already exists")) {
+                            error = string;
+                        } else if(string.equals("1")) {
+                            bool = true;
+                        }
+                    }
+
+                    if(bool)
+                        startActivity(new Intent(RegisterActivity.this, MainMenuActivity.class));
+                    else
+                        Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_SHORT).show();
+
 
                 } catch (IOException e) {
                     throw new RuntimeException(e);

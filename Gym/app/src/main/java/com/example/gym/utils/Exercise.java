@@ -1,10 +1,5 @@
 package com.example.gym.utils;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-
 import java.io.Serializable;
 
 public class Exercise implements Serializable {
