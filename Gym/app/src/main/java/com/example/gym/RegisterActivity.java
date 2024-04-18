@@ -40,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = editTextPassword.getText().toString();
 
                 try {
-                    Socket socket = new Socket("10.0.2.2", 8888);
+                    Socket socket = new Socket("34.175.52.16", 8888);
                     Client client = new Client(socket);
                     Object object = client.sendMessage("INSERT INTO users VALUES ('" + email + "', '" + HashUtils.hashPassword(password) + "');");
                     client.close();
