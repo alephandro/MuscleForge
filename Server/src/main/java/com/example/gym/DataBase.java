@@ -1,3 +1,5 @@
+package com.example.gym;
+
 import com.example.gym.utils.Exercise;
 
 import java.io.*;
@@ -9,7 +11,7 @@ public class DataBase {
     static String url = "jdbc:mysql://localhost:3306/MuscleForge";
     static String user = "root";
     static String password = "";
-	static String rutaBackup = "backup.sql";
+	static String backupPath = "backup.sql";
 
 	public static int executeInsert(String sql) throws SQLException {
 		int res = 0;
@@ -75,9 +77,9 @@ public class DataBase {
 		return result;
 	}
 
-	public void realizarBackup() {
+	public static String saveDatabase() {
 		try (Connection conn = DriverManager.getConnection(url, user, password);
-			 PrintWriter writer = new PrintWriter(new FileWriter(rutaBackup))) {
+			 PrintWriter writer = new PrintWriter(new FileWriter(backupPath))) {
 
 			String comandoBackup = "mysqldump -u " + user + " --databases MuscleForge";
 			Process proceso = Runtime.getRuntime().exec(comandoBackup);
@@ -89,20 +91,23 @@ public class DataBase {
 
 			int exitVal = proceso.waitFor();
 			if (exitVal == 0) {
-				System.out.println("Copia de seguridad creada con éxito en: " + rutaBackup);
+				System.out.println("Copia de seguridad creada con éxito en: " + backupPath);
 			} else {
 				System.err.println("Error al crear la copia de seguridad");
 			}
 
+			return backupPath;
+
 		} catch (SQLException | IOException | InterruptedException ex) {
 			ex.printStackTrace();
 		}
+		return null;
 	}
 
-	public void ejecutarBackupEnBaseDeDatos() {
+	public static void loadDatabase() {
 		try (Connection conn = DriverManager.getConnection(url, user, password);
 			 Statement stmt = conn.createStatement();
-			 BufferedReader reader = new BufferedReader(new FileReader(rutaBackup))) {
+			 BufferedReader reader = new BufferedReader(new FileReader(backupPath))) {
 
 			StringBuilder sb = new StringBuilder();
 			String line;

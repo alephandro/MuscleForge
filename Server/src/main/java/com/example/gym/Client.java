@@ -1,3 +1,5 @@
+package com.example.gym;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;

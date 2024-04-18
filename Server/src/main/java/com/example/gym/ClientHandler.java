@@ -1,3 +1,5 @@
+package com.example.gym;
+
 import com.example.gym.utils.Exercise;
 
 import java.io.IOException;

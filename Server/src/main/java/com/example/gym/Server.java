@@ -1,14 +1,30 @@
-import java.io.IOException;
+package com.example.gym;
+
+import com.example.gym.utils.Networking;
+
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Server {
 
     protected ServerSocket serverSocket;
+	protected Socket backupSocket;
+	protected ObjectOutputStream backupOutputStream;
+	protected ObjectInputStream backupInputStream;
 
     public Server(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
+		try {
+			this.backupSocket = new Socket(Networking.BackupIP, Networking.BackupPort);
+			this.backupOutputStream = new ObjectOutputStream(backupSocket.getOutputStream());
+			this.backupInputStream = new ObjectInputStream(backupSocket.getInputStream());
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		saveDatabase();
+
     }
 
     public void startServer() {
@@ -34,8 +50,23 @@ public class Server {
         }
     }
 
+	private void saveDatabase() {
+		String backupPath = DataBase.saveDatabase();
+		try {
+			int count;
+			byte[] buffer = new byte[1024];
+			BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(backupPath));
+			while ((count = bufferedInputStream.read(buffer)) > 0) {
+				backupOutputStream.write(buffer, 0, count);
+				backupOutputStream.flush();
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
     public static void main(String[] args) throws IOException {
         Server server = new Server(new ServerSocket(8888));
-        server.startServer();
+		server.startServer();
     }
 }
