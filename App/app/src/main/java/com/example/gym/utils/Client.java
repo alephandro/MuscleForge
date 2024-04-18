@@ -23,7 +23,7 @@ public class Client {
         Object object = null;
         try {
             if(socket.isConnected()) {
-                objectOutputStream.writeObject(message + "\n");
+                objectOutputStream.writeObject(message);
                 objectOutputStream.flush();
 
                 object = objectInputStream.readObject();

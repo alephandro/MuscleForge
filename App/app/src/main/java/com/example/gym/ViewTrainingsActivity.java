@@ -38,15 +38,12 @@ public class ViewTrainingsActivity extends AppCompatActivity {
         trainings = new ArrayList<>();
 
         Client client = new Client();
-        Object object = client.sendMessage(
-                "SELECT * FROM exercises");
+        Object object = client.sendMessage("SELECT * FROM exercises");
         client.close();
 
-        System.out.println("!Flag");
         System.out.println(object.getClass());
 
         if(object.getClass().equals(ArrayList.class)) {
-            System.out.println("ei");
             this.trainings = (ArrayList) object;
         }
 

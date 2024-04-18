@@ -55,16 +55,16 @@ public class ClientHandler implements Runnable {
 		System.out.println(sql);
 		try {
 			switch (sql.toUpperCase().charAt(0)) {
-				case 'I':
+				case 'I': //Register
 					int res = DataBase.executeInsert(sql);
 					System.out.println("The result from the insert is " + res);
 					sendMessage(res + "");
 					break;
 				case 'S':
-					if(sql.length() == 24){
+					if(sql.equals("SELECT * FROM exercises")) { //Self explanatory
 						List<Exercise> exercises = DataBase.executeQueryExercises(sql);
 						sendObject(exercises);
-					} else {
+					} else if(sql.contains("SELECT email, password FROM users")) { //Login
 						res = DataBase.executeQuery(sql);
 						if(res == 0)
 							sendMessage("Email or password incorrect");
