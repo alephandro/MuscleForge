@@ -4,6 +4,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataBase {
     static String url = "jdbc:mysql://localhost:3306/MuscleForge";
@@ -42,6 +44,36 @@ public class DataBase {
 			throw e;
 		}
 		return res;
+	}
+
+	public static List<Exercise> executeQueryExercises(String sql) throws SQLException {
+		int res = 0;
+		ResultSet databaseResult = null;
+		List<Exercise> result = null;
+		try {
+			Connection myConnection = DriverManager.getConnection(url, user, password);
+			Statement myStatement = myConnection.createStatement();
+			databaseResult = myStatement.executeQuery(sql);
+			result = new ArrayList<>();
+
+			String valorColumna1, valorColumna2, valorColumna3;
+			Exercise exercise;
+
+			while(databaseResult.next()) {
+				valorColumna1 = databaseResult.getString("name");
+				valorColumna2 = databaseResult.getString("muscle_group");
+				valorColumna3 = databaseResult.getString("description");
+
+				exercise = new Exercise(valorColumna1, valorColumna2, valorColumna3);
+				result.add(exercise);
+
+			}
+			myConnection.close();
+		} catch (SQLException e) {
+			System.out.println("ERROR in Database Connection: " + e);
+			throw e;
+		}
+		return result;
 	}
 
 	public void realizarBackup() {

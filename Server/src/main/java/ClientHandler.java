@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ClientHandler implements Runnable {
 
@@ -58,11 +59,16 @@ public class ClientHandler implements Runnable {
 					sendMessage(res + "");
 					break;
 				case 'S':
-					res = DataBase.executeQuery(sql);
-					if(res == 0)
-						sendMessage("Email or password incorrect");
-					else
-						sendMessage("Login accepted");
+					if(sql.equals("SELECT * FROM exercises")){
+						List<Exercise> exercises = DataBase.executeQueryExercises(sql);
+						sendObject(exercises);
+					} else {
+						res = DataBase.executeQuery(sql);
+						if(res == 0)
+							sendMessage("Email or password incorrect");
+						else
+							sendMessage("Login accepted");
+					}
 					break;
 			}
 		} catch (SQLException e) {
@@ -84,6 +90,17 @@ public class ClientHandler implements Runnable {
 			close();
 		}
     }
+
+	protected void sendObject(Object message) {
+		try {
+			if(socket.isConnected()) {
+				objectOutputStream.writeObject(message);
+				objectOutputStream.flush();
+			}
+		} catch (IOException e) {
+			close();
+		}
+	}
 
     protected void close() {
         try {
