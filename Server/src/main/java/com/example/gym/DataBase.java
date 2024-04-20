@@ -81,7 +81,7 @@ public class DataBase {
 		try (Connection conn = DriverManager.getConnection(url, user, password);
 			 PrintWriter writer = new PrintWriter(new FileWriter(backupPath))) {
 
-			String comandoBackup = "mysqldump -u " + user + " --databases MuscleForge";
+			String comandoBackup = "mysqldump -u " + user + " -p" + password + " --databases MuscleForge";
 			Process proceso = Runtime.getRuntime().exec(comandoBackup);
 
 			java.util.Scanner scanner = new java.util.Scanner(proceso.getInputStream());
@@ -93,7 +93,7 @@ public class DataBase {
 			if (exitVal == 0) {
 				System.out.println("Copia de seguridad creada con éxito en: " + backupPath);
 			} else {
-				System.err.println("Error al crear la copia de seguridad");
+				System.err.println("Error al crear la copia de seguridad. Error: " + exitVal);
 			}
 
 			return backupPath;

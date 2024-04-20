@@ -1,6 +1,6 @@
 package com.example.gym;
 
-import com.example.gym.utils.Networking;
+import com.example.gym.utils.NetworkVariables;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -16,7 +16,7 @@ public class Server {
     public Server(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
 		try {
-			this.backupSocket = new Socket(Networking.BackupIP, Networking.BackupPort);
+			this.backupSocket = new Socket(NetworkVariables.BackupIP, NetworkVariables.BackupPort);
 			this.backupOutputStream = new ObjectOutputStream(backupSocket.getOutputStream());
 			this.backupInputStream = new ObjectInputStream(backupSocket.getInputStream());
 		} catch (IOException e) {
@@ -56,7 +56,7 @@ public class Server {
 			int count;
 			byte[] buffer = new byte[1024];
 			BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(backupPath));
-			while ((count = bufferedInputStream.read(buffer)) > 0) {
+			while ((count = bufferedInputStream.read(buffer)) != -1) {
 				backupOutputStream.write(buffer, 0, count);
 				backupOutputStream.flush();
 			}

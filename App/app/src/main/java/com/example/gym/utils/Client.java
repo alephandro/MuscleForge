@@ -11,7 +11,7 @@ public class Client {
 
     public Client() {
         try {
-            this.socket = new Socket(Networking.IP, Networking.Port);
+            this.socket = new Socket(NetworkVariables.IP, NetworkVariables.Port);
             this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             this.objectInputStream = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {

@@ -11,10 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.utils.Client;
 import com.example.gym.utils.HashUtils;
-import com.example.gym.utils.Networking;
-
-import java.io.IOException;
-import java.net.Socket;
 
 public class LoginActivity extends AppCompatActivity {
 

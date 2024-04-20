@@ -11,13 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gym.utils.Client;
 import com.example.gym.utils.Exercise;
-import com.example.gym.utils.Networking;
 import com.example.gym.utils.WorkoutAdapter;
 
-import java.io.IOException;
-import java.net.Socket;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 

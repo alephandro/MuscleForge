@@ -82,20 +82,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-18 19:29:59
-*/;
-CREATE TABLE `users` (
-  `email` varchar(100) NOT NULL,
-  `password` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `users`
---
-
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('a','ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+-- Dump completed on 2024-04-20 12:51:32

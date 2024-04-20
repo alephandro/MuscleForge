@@ -1,6 +1,6 @@
 package com.example.gym.utils;
 
-public class Networking {
+public class NetworkVariables {
 
     public static final String IP = "34.175.88.56";
 

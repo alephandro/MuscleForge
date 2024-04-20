@@ -36,7 +36,7 @@ public class BackupServer {
 				FileOutputStream fileOutputStream = new FileOutputStream(backupPath);
 				byte[] buffer = new byte[1024];
 				int count;
-				while((count = objectInputStream.read(buffer)) =! 1){
+				while((count = objectInputStream.read(buffer)) != -1){
 					fileOutputStream.write(buffer, 0, count);
 				}
 				fileOutputStream.close();
