@@ -13,26 +13,22 @@ import static com.example.gym.DataBase.backupPath;
 public class Server {
 
     protected ServerSocket serverSocket;
-	protected Socket backupSocket;
-	protected ObjectOutputStream backupOutputStream;
-	protected ObjectInputStream backupInputStream;
+	BackupHandler backupHandler;
 
     public Server(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
-		try {
-			this.backupSocket = new Socket(NetworkVariables.BackupIP, NetworkVariables.BackupPort);
-			this.backupOutputStream = new ObjectOutputStream(backupSocket.getOutputStream());
-			this.backupInputStream = new ObjectInputStream(backupSocket.getInputStream());
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-
-		saveDatabase();
-		loadDatabase();
     }
 
     public void startServer() {
-        try {
+
+		backupHandler = new BackupHandler();
+		backupHandler.connectToBackupServer();
+		backupHandler.loadDatabase();
+		backupHandler.close();
+
+		periodicBackup.start();
+
+		try {
             while (!serverSocket.isClosed()) {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("New client from " + clientSocket.getInetAddress());
@@ -55,46 +51,24 @@ public class Server {
         }
     }
 
-	private void saveDatabase() {
-		String backupPath = DataBase.saveDatabase();
-		try {
-			backupOutputStream.writeObject("receive");
-			int count;
-			byte[] buffer = new byte[1024];
-			FileInputStream fileInputStream = new FileInputStream(backupPath);
-			BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
-			while ((count = bufferedInputStream.read(buffer)) != -1) {
-				backupOutputStream.write(buffer, 0, count);
-				backupOutputStream.flush();
+	Thread periodicBackup = new Thread(new Runnable() {
+		@Override
+		public void run() {
+			System.out.println("Primera vez");
+			while(true) {
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					throw new RuntimeException(e);
+				}
+
+				backupHandler.connectToBackupServer();
+				System.out.println("Lo estoy haciendo");
+				backupHandler.saveDatabase();
+				backupHandler.close();
 			}
-			fileInputStream.close();
-
-			Files.delete(Paths.get(backupPath));
-		} catch (IOException e) {
-			throw new RuntimeException(e);
 		}
-
-		System.out.println("Database saved");
-	}
-
-	private void loadDatabase() {
-		try {
-			backupOutputStream.writeObject("send");
-			FileOutputStream fileOutputStream = new FileOutputStream(backupPath);
-			byte[] buffer = new byte[1024];
-			int count;
-			while((count = backupInputStream.read(buffer)) == 1024){
-				fileOutputStream.write(buffer, 0, count);
-			}
-			fileOutputStream.write(buffer, 0, count);
-			fileOutputStream.close();
-
-			DataBase.loadDatabase();
-			Files.delete(Paths.get(backupPath));
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
+	});
 
     public static void main(String[] args) throws IOException {
         Server server = new Server(new ServerSocket(8888));

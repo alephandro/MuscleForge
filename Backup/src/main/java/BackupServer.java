@@ -17,23 +17,22 @@ public class BackupServer {
     }
 
 	protected void startServer() {
-        try {
-            while (!listenerSocket.isClosed()) {
+		while(true) {
+			try {
 				Socket temp = listenerSocket.accept();
-				if(temp.getInetAddress().toString().equals(NetworkVariables.ServerIP))
+				if (temp.getInetAddress().toString().equals(NetworkVariables.ServerIP))
 					this.serverSocket = temp;
-
 				this.objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
 				this.objectInputStream = new ObjectInputStream(serverSocket.getInputStream());
 				break;
-            }
-        } catch (IOException e) {
-            stopListening();
-        }
+			} catch (IOException e) {
+				close();
+			}
+		}
     }
 
 	protected void handleObjects() {
-		while(serverSocket.isConnected()) {
+		while(!serverSocket.isClosed()) {
 			try {
 				Object object = objectInputStream.readObject();
 				if(object instanceof String string){
@@ -48,7 +47,7 @@ public class BackupServer {
 					}
 				}
 			} catch (IOException | ClassNotFoundException e) {
-				throw new RuntimeException(e);
+				close();
 			}
 		}
 	}
@@ -82,16 +81,11 @@ public class BackupServer {
 		}
 	}
 
-	protected void closeConnection() {
-		try {
-			serverSocket.close();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-    protected void stopListening() {
+    protected void close() {
         try {
+			System.out.println("Closing the connection");
+			if(serverSocket != null)
+				serverSocket.close();
             if(listenerSocket != null)
                 listenerSocket.close();
         } catch (IOException e) {
@@ -99,9 +93,17 @@ public class BackupServer {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        BackupServer backupServer = new BackupServer(new ServerSocket(9999));
-        backupServer.startServer();
-		backupServer.handleObjects();
+    public static void main(String[] args) {
+		BackupServer backupServer = null;
+		while(true) {
+			try {
+				backupServer = new BackupServer(new ServerSocket(9999));
+				backupServer.startServer();
+				backupServer.handleObjects();
+			} catch (IOException e) {
+				backupServer.close();
+				continue;
+			}
+		}
     }
 }
