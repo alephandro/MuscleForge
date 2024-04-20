@@ -92,9 +92,9 @@ public class DataBase {
 
 			int exitVal = proceso.waitFor();
 			if (exitVal == 0) {
-				System.out.println("Copia de seguridad creada con éxito en: " + backupPath);
+				System.out.println("Backup successfully created in: " + backupPath);
 			} else {
-				System.err.println("Error al crear la copia de seguridad. Error: " + exitVal);
+				System.err.println("Error creating the backup: " + exitVal);
 			}
 
 			return backupPath;
