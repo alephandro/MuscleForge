@@ -54,16 +54,14 @@ public class Server {
 	Thread periodicBackup = new Thread(new Runnable() {
 		@Override
 		public void run() {
-			System.out.println("Primera vez");
 			while(true) {
 				try {
-					Thread.sleep(5000);
+					Thread.sleep(30000);
 				} catch (InterruptedException e) {
 					throw new RuntimeException(e);
 				}
 
 				backupHandler.connectToBackupServer();
-				System.out.println("Lo estoy haciendo");
 				backupHandler.saveDatabase();
 				backupHandler.close();
 			}

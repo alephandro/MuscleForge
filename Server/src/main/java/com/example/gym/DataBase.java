@@ -114,23 +114,20 @@ public class DataBase {
 			StringBuilder query = new StringBuilder();
 			stmt.executeUpdate("DROP SCHEMA IF EXISTS MuscleForge;");
 			while ((line = reader.readLine()) != null) {
-				// Ignorar comentarios y líneas en blanco
 				if (!line.trim().startsWith("--") && !line.trim().isEmpty()) {
 					query.append(line);
-					// Si la línea termina con ';' significa que es el final de la consulta
 					if (line.trim().endsWith(";")) {
 						stmt.executeUpdate(query.toString());
-						query.setLength(0); // Limpiar el StringBuilder para la siguiente consulta
+						query.setLength(0);
 					}
 				}
 			}
 
-			System.out.println("Base de datos restaurada con éxito desde el archivo: " + backupPath);
+			System.out.println("Database restored successfully from: " + backupPath);
 
 		} catch (SQLException | IOException ex) {
 			ex.printStackTrace();
 		}
 
-		System.out.println("Backup ejecutado con éxito en la base de datos.");
 	}
 }

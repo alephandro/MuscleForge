@@ -39,7 +39,6 @@ public class ClientHandler implements Runnable {
 				Object object = objectInputStream.readObject();
 				handleObjects(object);
 			} catch (IOException | ClassNotFoundException e) {
-				e.printStackTrace();
 				close();
 				break;
 			}
