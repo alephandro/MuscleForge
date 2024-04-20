@@ -1,7 +1,8 @@
+import utils.NetworkVariables;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.file.Files;
 
 public class BackupServer {
 
@@ -18,19 +19,20 @@ public class BackupServer {
     public void startServer() {
         try {
             while (!listenerSocket.isClosed()) {
-				this.serverSocket = listenerSocket.accept();
-				System.out.println(serverSocket.getInetAddress());
+				Socket temp = listenerSocket.accept();
+				if(temp.getInetAddress().toString().equals(NetworkVariables.ServerIP))
+					this.serverSocket = temp;
 
 				this.objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
 				this.objectInputStream = new ObjectInputStream(serverSocket.getInputStream());
 				receiveBackups();
             }
         } catch (IOException e) {
-            closeServer();
+            stopListening();
         }
     }
 
-	public void receiveBackups() {
+	protected void receiveBackups() {
 		while (serverSocket.isConnected()) {
 			try {
 				FileOutputStream fileOutputStream = new FileOutputStream(backupPath);
@@ -46,7 +48,7 @@ public class BackupServer {
 		}
 	}
 
-	public void sendBackups() {
+	protected void sendBackups() {
 		while (serverSocket.isConnected()) {
 			try {
 				objectOutputStream.writeObject(new File(backupPath));
@@ -57,7 +59,15 @@ public class BackupServer {
 		}
 	}
 
-    protected void closeServer() {
+	public void closeConnection() {
+		try {
+			serverSocket.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+    protected void stopListening() {
         try {
             if(listenerSocket != null)
                 listenerSocket.close();
@@ -69,5 +79,6 @@ public class BackupServer {
     public static void main(String[] args) throws IOException {
         BackupServer backupServer = new BackupServer(new ServerSocket(9999));
         backupServer.startServer();
+		backupServer.receiveBackups();
     }
 }
