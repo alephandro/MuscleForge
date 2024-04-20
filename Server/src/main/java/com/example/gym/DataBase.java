@@ -9,6 +9,7 @@ import java.util.List;
 
 public class DataBase {
     static String url = "jdbc:mysql://localhost:3306/MuscleForge";
+	static String urlLoad = "jdbc:mysql://localhost:3306/";
     static String user = "rana";
     static String password = "rana";
 	static String backupPath = "backup.sql";
@@ -105,25 +106,31 @@ public class DataBase {
 	}
 
 	public static void loadDatabase() {
-		try (Connection conn = DriverManager.getConnection(url, user, password);
+		try (Connection conn = DriverManager.getConnection(urlLoad, user, password);
 			 Statement stmt = conn.createStatement();
 			 BufferedReader reader = new BufferedReader(new FileReader(backupPath))) {
 
-			StringBuilder sb = new StringBuilder();
 			String line;
+			StringBuilder query = new StringBuilder();
+			stmt.executeUpdate("DROP SCHEMA IF EXISTS MuscleForge;");
 			while ((line = reader.readLine()) != null) {
-				sb.append(line);
+				// Ignorar comentarios y líneas en blanco
+				if (!line.trim().startsWith("--") && !line.trim().isEmpty()) {
+					query.append(line);
+					// Si la línea termina con ';' significa que es el final de la consulta
+					if (line.trim().endsWith(";")) {
+						stmt.executeUpdate(query.toString());
+						query.setLength(0); // Limpiar el StringBuilder para la siguiente consulta
+					}
+				}
 			}
 
-			String[] queries = sb.toString().split(";");
-			for (String query : queries) {
-				stmt.executeUpdate(query);
-			}
-
-			System.out.println("Backup ejecutado con éxito en la base de datos.");
+			System.out.println("Base de datos restaurada con éxito desde el archivo: " + backupPath);
 
 		} catch (SQLException | IOException ex) {
 			ex.printStackTrace();
 		}
+
+		System.out.println("Backup ejecutado con éxito en la base de datos.");
 	}
 }

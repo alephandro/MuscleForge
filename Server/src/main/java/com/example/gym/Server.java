@@ -5,6 +5,10 @@ import com.example.gym.utils.NetworkVariables;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static com.example.gym.DataBase.backupPath;
 
 public class Server {
 
@@ -24,7 +28,7 @@ public class Server {
 		}
 
 		saveDatabase();
-
+		loadDatabase();
     }
 
     public void startServer() {
@@ -41,6 +45,7 @@ public class Server {
             closeServer();
         }
     }
+
     protected void closeServer() {
         try {
             if(serverSocket != null)
@@ -53,13 +58,39 @@ public class Server {
 	private void saveDatabase() {
 		String backupPath = DataBase.saveDatabase();
 		try {
+			backupOutputStream.writeObject("receive");
 			int count;
 			byte[] buffer = new byte[1024];
-			BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(backupPath));
+			FileInputStream fileInputStream = new FileInputStream(backupPath);
+			BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
 			while ((count = bufferedInputStream.read(buffer)) != -1) {
 				backupOutputStream.write(buffer, 0, count);
 				backupOutputStream.flush();
 			}
+			fileInputStream.close();
+
+			Files.delete(Paths.get(backupPath));
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		System.out.println("Database saved");
+	}
+
+	private void loadDatabase() {
+		try {
+			backupOutputStream.writeObject("send");
+			FileOutputStream fileOutputStream = new FileOutputStream(backupPath);
+			byte[] buffer = new byte[1024];
+			int count;
+			while((count = backupInputStream.read(buffer)) == 1024){
+				fileOutputStream.write(buffer, 0, count);
+			}
+			fileOutputStream.write(buffer, 0, count);
+			fileOutputStream.close();
+
+			DataBase.loadDatabase();
+			Files.delete(Paths.get(backupPath));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

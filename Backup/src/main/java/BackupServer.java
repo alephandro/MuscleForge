@@ -16,7 +16,7 @@ public class BackupServer {
         this.listenerSocket = listenerSocket;
     }
 
-    public void startServer() {
+	protected void startServer() {
         try {
             while (!listenerSocket.isClosed()) {
 				Socket temp = listenerSocket.accept();
@@ -25,41 +25,64 @@ public class BackupServer {
 
 				this.objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
 				this.objectInputStream = new ObjectInputStream(serverSocket.getInputStream());
-				receiveBackups();
+				break;
             }
         } catch (IOException e) {
             stopListening();
         }
     }
 
-	protected void receiveBackups() {
-		while (serverSocket.isConnected()) {
+	protected void handleObjects() {
+		while(serverSocket.isConnected()) {
 			try {
-				FileOutputStream fileOutputStream = new FileOutputStream(backupPath);
-				byte[] buffer = new byte[1024];
-				int count;
-				while((count = objectInputStream.read(buffer)) != -1){
-					fileOutputStream.write(buffer, 0, count);
+				Object object = objectInputStream.readObject();
+				if(object instanceof String string){
+					System.out.println(string);
+					switch(string.toLowerCase()) {
+						case "send":
+							sendBackups();
+							break;
+						case "receive":
+							receiveBackups();
+							break;
+					}
 				}
-				fileOutputStream.close();
-			} catch (IOException e) {
+			} catch (IOException | ClassNotFoundException e) {
 				throw new RuntimeException(e);
 			}
+		}
+	}
+
+	protected void receiveBackups() {
+		try {
+			FileOutputStream fileOutputStream = new FileOutputStream(backupPath);
+			byte[] buffer = new byte[1024];
+			int count;
+			while((count = objectInputStream.read(buffer)) == 1024){
+				fileOutputStream.write(buffer, 0, count);
+			}
+			fileOutputStream.write(buffer, 0, count);
+			fileOutputStream.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
 	protected void sendBackups() {
-		while (serverSocket.isConnected()) {
-			try {
-				objectOutputStream.writeObject(new File(backupPath));
+		try {
+			int count;
+			byte[] buffer = new byte[1024];
+			BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(backupPath));
+			while ((count = bufferedInputStream.read(buffer)) != -1) {
+				objectOutputStream.write(buffer, 0, count);
 				objectOutputStream.flush();
-			} catch (IOException e) {
-				throw new RuntimeException(e);
 			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
-	public void closeConnection() {
+	protected void closeConnection() {
 		try {
 			serverSocket.close();
 		} catch (IOException e) {
@@ -79,6 +102,6 @@ public class BackupServer {
     public static void main(String[] args) throws IOException {
         BackupServer backupServer = new BackupServer(new ServerSocket(9999));
         backupServer.startServer();
-		backupServer.receiveBackups();
+		backupServer.handleObjects();
     }
 }

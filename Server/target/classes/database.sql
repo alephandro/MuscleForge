@@ -7,7 +7,7 @@ CREATE SCHEMA MuscleForge;
 
 USE MuscleForge;
 
-CREATE USER 'rana'@'localhost' IDENTIFIED BY 'rana';
+# CREATE USER 'rana'@'localhost' IDENTIFIED BY 'rana';
 
 CREATE TABLE users (
 					   email varchar(100) PRIMARY KEY,
