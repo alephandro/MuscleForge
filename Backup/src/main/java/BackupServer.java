@@ -20,8 +20,6 @@ public class BackupServer {
 		while(true) {
 			try {
 				Socket temp = listenerSocket.accept();
-				System.out.println("Getting request from: " + temp.getInetAddress().toString());
-				System.out.println("Server is: " + NetworkVariables.ServerIP);
 				if (temp.getInetAddress().toString().equals(NetworkVariables.ServerIP)) {
 					this.serverSocket = temp;
 					this.objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
