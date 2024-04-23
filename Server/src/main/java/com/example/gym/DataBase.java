@@ -79,28 +79,14 @@ public class DataBase {
 	}
 
 	public static String saveDatabase() {
-		try (Connection conn = DriverManager.getConnection(url, user, password);
-			 PrintWriter writer = new PrintWriter(new FileWriter(backupPath))) {
+		try (Connection conn = DriverManager.getConnection(url, user, password)) {
 
-			String comandoBackup = "docker exec db mysqldump -u "
-					+ user + " -p" + password + " MuscleForge > " + backupPath;
-			Process proceso = Runtime.getRuntime().exec(comandoBackup);
-
-			java.util.Scanner scanner = new java.util.Scanner(proceso.getInputStream());
-			while (scanner.hasNext()) {
-				writer.println(scanner.nextLine());
-			}
-
-			int exitVal = proceso.waitFor();
-			if (exitVal == 0) {
-				System.out.println("Backup successfully created in: " + backupPath);
-			} else {
-				System.err.println("Error creating the backup: " + exitVal);
-			}
+			Statement stmt = conn.createStatement();
+			stmt.execute("BACKUP DATABASE MuscleForge TO " + backupPath);
 
 			return backupPath;
 
-		} catch (SQLException | IOException | InterruptedException ex) {
+		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
 		return null;
