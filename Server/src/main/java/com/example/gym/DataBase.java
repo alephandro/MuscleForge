@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataBase {
-    static String url = "jdbc:mysql://server_db_1:3306/MuscleForge";
-	static String urlLoad = "jdbc:mysql://server_db_1:3306/";
+    static String url = "jdbc:mysql://db:3306/MuscleForge";
+	static String urlLoad = "jdbc:mysql://db:3306/";
     static String user = "rana";
     static String password = "rana";
 	static String backupPath = "backup.sql";
