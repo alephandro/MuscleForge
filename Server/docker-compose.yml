@@ -4,7 +4,9 @@ services:
   app:
     image: backend:v2
     ports:
-      - "8888:8888"  
+      - "8888:8888"
+    networks:
+      - server-net
     depends_on:
       - db
 
@@ -16,9 +18,14 @@ services:
       MYSQL_USER: rana
       MYSQL_PASSWORD: rana
     ports:
-      - "3306:3306"  
+      - "3306:3306"
+    networks:
+      - server-net
     volumes:
       - db_data:/var/lib/mysql
 
 volumes:
   db_data:
+
+networks:
+  server-net:
