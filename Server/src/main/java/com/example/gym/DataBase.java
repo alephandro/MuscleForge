@@ -82,7 +82,8 @@ public class DataBase {
 		try (Connection conn = DriverManager.getConnection(url, user, password);
 			 PrintWriter writer = new PrintWriter(new FileWriter(backupPath))) {
 
-			String comandoBackup = "mysqldump -u " + user + " -p" + password + " --databases MuscleForge";
+			String comandoBackup = "docker exec db mysqldump -u "
+					+ user + " -p" + password + " MuscleForge > " + backupPath;
 			Process proceso = Runtime.getRuntime().exec(comandoBackup);
 
 			java.util.Scanner scanner = new java.util.Scanner(proceso.getInputStream());
