@@ -5,6 +5,11 @@ RUN apt-get update && \
     apt-get install -y gnupg2 wget lsb-release && \
     rm -rf /var/lib/apt/lists/*
 
+# Add MySQL APT repository GPG key
+RUN wget -O /tmp/RPM-GPG-KEY-mysql https://repo.mysql.com/RPM-GPG-KEY-mysql && \
+    apt-key add /tmp/RPM-GPG-KEY-mysql && \
+    rm /tmp/RPM-GPG-KEY-mysql
+
 # Add MySQL APT repository
 RUN wget -O /tmp/mysql-apt-config.deb https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb && \
     dpkg -i /tmp/mysql-apt-config.deb && \
