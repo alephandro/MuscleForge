@@ -80,12 +80,12 @@ public class DataBase {
 
 	public static String saveDatabase() {
 		try (Connection conn = DriverManager.getConnection(url, user, password)) {
-
-			Statement stmt = conn.createStatement();
-			stmt.execute("BACKUP DATABASE MuscleForge TO " + backupPath);
-
+			File f = new File(backupPath);
+			while(true) {
+				if(f.exists() && !f.isDirectory())
+					break;
+			}
 			return backupPath;
-
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
