@@ -17,9 +17,8 @@ public class BackupServer {
         this.listenerSocket = listenerSocket;
     }
 
-	protected void startServer() {
+	protected void startServer() throws IOException {
 		while(true) {
-			NetworkVariables.updateDomain();
 			try {
 				Socket temp = listenerSocket.accept();
 				if (temp.getInetAddress().toString().equals(NetworkVariables.ServerIP)) {
@@ -31,12 +30,14 @@ public class BackupServer {
 				break;
 			} catch (IOException e) {
 				close();
+				throw e;
 			}
 		}
     }
 
-	protected void handleObjects() {
+	protected void handleObjects() throws IOException, ClassNotFoundException {
 		while(!serverSocket.isClosed()) {
+			NetworkVariables.updateDomain();
 			try {
 				Object object = objectInputStream.readObject();
 				if(object instanceof String string){
@@ -52,6 +53,7 @@ public class BackupServer {
 				}
 			} catch (IOException | ClassNotFoundException e) {
 				close();
+				throw e;
 			}
 		}
 	}
@@ -104,7 +106,8 @@ public class BackupServer {
 				backupServer = new BackupServer(new ServerSocket(NetworkVariables.BackupPort));
 				backupServer.startServer();
 				backupServer.handleObjects();
-			} catch (IOException e) {
+			} catch (IOException | ClassNotFoundException e) {
+				assert backupServer != null;
 				backupServer.close();
 				continue;
 			}
