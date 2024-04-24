@@ -11,6 +11,8 @@ COPY src ./src
 # Compile the Maven project
 RUN mvn compile
 
+RUN mkdir /shared-data
+
 # Expose port 8888
 EXPOSE 8888
 
