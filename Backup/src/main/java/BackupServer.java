@@ -12,12 +12,15 @@ public class BackupServer {
 	protected ObjectInputStream objectInputStream;
 	protected String backupPath = "backup.sql";
 
+	protected DuckDNS duck = new DuckDNS();
+
     public BackupServer(ServerSocket listenerSocket) {
         this.listenerSocket = listenerSocket;
     }
 
 	protected void startServer() {
 		while(true) {
+			duck.updateDomain();
 			try {
 				Socket temp = listenerSocket.accept();
 				if (temp.getInetAddress().toString().equals(NetworkVariables.ServerIP)) {
