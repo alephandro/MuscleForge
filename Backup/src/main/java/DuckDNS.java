@@ -8,7 +8,6 @@ public class DuckDNS {
     private String duckDnsToken = "732fcb36-116b-470d-bb46-5addb4679007";
     public String domain = "muscleforge-backup.duckdns.org";
 
-    public DuckDNS(){}
 
     public void updateDomain(){
 
