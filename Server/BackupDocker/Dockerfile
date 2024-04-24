@@ -1,5 +1,8 @@
 FROM mysql:latest
 
+# Instalar el paquete cron
+RUN apt-get update && apt-get install -y cron
+
 # Copiar el script de respaldo al contenedor
 COPY backup.sh /usr/local/bin/backup.sh
 
