@@ -1,7 +1,10 @@
-FROM mysql:latest
+FROM debian:latest
 
-# Instalar el paquete cron
-RUN apt-get update && apt-get install -y cron
+# Actualizar los repositorios e instalar MySQL Server y cron
+RUN apt-get update && apt-get install -y \
+    mysql-server \
+    cron \
+ && rm -rf /var/lib/apt/lists/*
 
 # Copiar el script de respaldo al contenedor
 COPY backup.sh /usr/local/bin/backup.sh
@@ -18,5 +21,5 @@ RUN chmod 0644 /etc/cron.d/backup-cron
 # Activar la configuración de cron
 RUN crontab /etc/cron.d/backup-cron
 
-# Ejecutar cron en primer plano
-CMD ["cron", "-f"]
+# Iniciar el servicio de cron y MySQL al iniciar el contenedor
+CMD service cron start && service mysql start && tail -f /dev/null
