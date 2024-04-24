@@ -1,8 +1,18 @@
 FROM debian:latest
 
-# Install MySQL
+# Install prerequisites
 RUN apt-get update && \
-    apt-get install -y mysql-server && \
+    apt-get install -y gnupg2 wget lsb-release && \
+    rm -rf /var/lib/apt/lists/*
+
+# Add MySQL APT repository
+RUN wget -O /tmp/mysql-apt-config.deb https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb && \
+    dpkg -i /tmp/mysql-apt-config.deb && \
+    rm /tmp/mysql-apt-config.deb
+
+# Install MySQL Server
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server && \
     rm -rf /var/lib/apt/lists/*
 
 # Instalar cron
