@@ -103,7 +103,7 @@ public class BackupServer {
 		BackupServer backupServer = null;
 		while(true) {
 			try {
-				backupServer = new BackupServer(new ServerSocket(NetworkVariables.ServerPort));
+				backupServer = new BackupServer(new ServerSocket(NetworkVariables.BackupPort));
 				backupServer.startServer();
 				backupServer.handleObjects();
 			} catch (IOException e) {

@@ -3,6 +3,7 @@ package com.example.gym;
 import com.example.gym.utils.NetworkVariables;
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -16,15 +17,22 @@ public class BackupHandler {
 	protected ObjectInputStream backupInputStream;
 
 	public void connectToBackupServer() {
+		int timeout = 0;
 		while(true) {
 			try {
-				this.backupSocket = new Socket(NetworkVariables.BackupIP, NetworkVariables.BackupPort);
+				timeout = 5;
+				this.backupSocket = new Socket();
+				this.backupSocket.connect(new InetSocketAddress(NetworkVariables.BackupIP, NetworkVariables.BackupPort),
+						5000);
+				timeout = 0;
 				this.backupOutputStream = new ObjectOutputStream(backupSocket.getOutputStream());
-				this.backupInputStream = new ObjectInputStream(backupSocket.getInputStream());
+				InputStream is = backupSocket.getInputStream();
+				this.backupInputStream = new ObjectInputStream(is);
 				break;
 			} catch (IOException e) {
 				try {
-					System.out.println("Retrying the connection in 5s");
+					timeout += 5;
+					System.out.println("Retrying the connection in " + timeout + "s");
 					Thread.sleep(5000);
 				} catch (InterruptedException ex) {
 					throw new RuntimeException(ex);
