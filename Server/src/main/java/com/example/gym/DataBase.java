@@ -9,9 +9,9 @@ import java.util.List;
 
 public class DataBase {
     static String url = "jdbc:mysql://db:3306/MuscleForge";
-	static String urlLoad = "jdbc:mysql://db:3306/";
-    static String user = "rana";
-    static String password = "rana";
+    static String urlLoad = "jdbc:mysql://db:3306/";
+    static String user = "root";
+    static String password = "";
 	static String backupPath = "/shared-data/backup.sql";
 
 	public static int executeInsert(String sql) throws SQLException {
