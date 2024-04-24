@@ -29,7 +29,6 @@ public class Server {
 
 		try {
             while (!serverSocket.isClosed()) {
-                NetworkVariables.updateDomain();
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("New client from " + clientSocket.getInetAddress());
 
@@ -61,6 +60,7 @@ public class Server {
 					throw new RuntimeException(e);
 				}
 
+				NetworkVariables.updateDomain();
 				backupHandler.connectToBackupServer();
 				backupHandler.saveDatabase();
 				backupHandler.close();
