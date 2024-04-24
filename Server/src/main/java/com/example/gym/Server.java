@@ -1,5 +1,6 @@
 package com.example.gym;
 
+import com.example.gym.utils.DuckDNS;
 import com.example.gym.utils.NetworkVariables;
 
 import java.io.*;
@@ -14,6 +15,7 @@ public class Server {
 
     protected ServerSocket serverSocket;
 	BackupHandler backupHandler;
+    protected static DuckDNS duck = new DuckDNS();
 
     public Server(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
@@ -30,6 +32,7 @@ public class Server {
 
 		try {
             while (!serverSocket.isClosed()) {
+                duck.updateDomain();
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("New client from " + clientSocket.getInetAddress());
 
