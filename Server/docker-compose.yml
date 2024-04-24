@@ -7,28 +7,17 @@ services:
       - "8888:8888"
     networks:
       - server-net
-    volumes:
-      - db_data:/var/lib/mysql
     depends_on:
       - db
 
   db:
     # will build ./BackupDocker/Dockerfile
-    build: ./BackupDocker
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: MuscleForge
-      MYSQL_USER: rana
-      MYSQL_PASSWORD: rana
+    build: ./BackupDocker/
     ports:
       - "3306:3306"
     networks:
       - server-net
-    volumes:
-      - db_data:/var/lib/mysql
 
-volumes:
-  db_data:
 
 networks:
   server-net:
