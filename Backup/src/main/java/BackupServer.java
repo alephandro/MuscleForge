@@ -1,4 +1,3 @@
-import utils.DuckDNS;
 import utils.NetworkVariables;
 
 import java.io.*;
@@ -13,7 +12,6 @@ public class BackupServer {
 	protected ObjectInputStream objectInputStream;
 	protected String backupPath = "backup.sql";
 
-	protected DuckDNS duck = new DuckDNS();
 
     public BackupServer(ServerSocket listenerSocket) {
         this.listenerSocket = listenerSocket;
@@ -21,7 +19,7 @@ public class BackupServer {
 
 	protected void startServer() {
 		while(true) {
-			duck.updateDomain();
+			NetworkVariables.updateDomain();
 			try {
 				Socket temp = listenerSocket.accept();
 				if (temp.getInetAddress().toString().equals(NetworkVariables.ServerIP)) {
