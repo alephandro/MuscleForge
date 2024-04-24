@@ -12,7 +12,7 @@ public class DataBase {
 	static String urlLoad = "jdbc:mysql://db:3306/";
     static String user = "rana";
     static String password = "rana";
-	static String backupPath = "backup.sql";
+	static String backupPath = "/shared-data/backup.sql";
 
 	public static int executeInsert(String sql) throws SQLException {
 		int res = 0;
