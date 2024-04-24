@@ -25,5 +25,5 @@ RUN chmod 0644 /etc/cron.d/backup-cron
 # Apply cron job configuration
 RUN crontab /etc/cron.d/backup-cron
 
-# Start MySQL service on container startup
-CMD ["mysqld", "--daemonize"]
+# Add delay before starting cron to ensure MySQL server is ready
+CMD ["bash", "-c", "sleep 10 && cron && mysqld --daemonize"]
