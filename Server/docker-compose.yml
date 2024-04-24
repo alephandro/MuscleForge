@@ -9,6 +9,8 @@ services:
       - server-net
     depends_on:
       - db
+    volumes:
+      - shared-data:/shared-data
 
   db:
     # will build ./BackupDocker/Dockerfile
@@ -17,7 +19,11 @@ services:
       - "3306:3306"
     networks:
       - server-net
+    volumes:
+      - shared-data:/shared-data
 
+volumes:
+ shared-data:
 
 networks:
   server-net:
