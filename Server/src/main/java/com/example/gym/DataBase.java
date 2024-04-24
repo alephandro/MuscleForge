@@ -84,9 +84,11 @@ public class DataBase {
 			while(true) {
 				if(f.exists() && !f.isDirectory())
 					break;
+				System.out.println("Waiting for file");
+				Thread.sleep(5000);
 			}
 			return backupPath;
-		} catch (SQLException ex) {
+		} catch (SQLException | InterruptedException ex) {
 			ex.printStackTrace();
 		}
 		return null;
