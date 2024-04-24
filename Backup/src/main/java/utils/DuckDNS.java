@@ -1,3 +1,5 @@
+package utils;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -12,7 +14,7 @@ public class DuckDNS {
     public void updateDomain(){
 
         try {
-            // Construye la URL de actualización de DuckDNS
+            // Construye la URL de actualización de utils.DuckDNS
             String updateUrl = "https://www.duckdns.org/update?domains=" + domain + "&token=" + duckDnsToken + "&ip=";
             URL url = new URL(updateUrl);
 
@@ -29,8 +31,8 @@ public class DuckDNS {
             }
             in.close();
 
-            // Imprime la respuesta del servidor DuckDNS
-            System.out.println("Respuesta de DuckDNS: " + response.toString());
+            // Imprime la respuesta del servidor utils.DuckDNS
+            System.out.println("Respuesta de utils.DuckDNS: " + response.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }

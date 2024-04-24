@@ -1,3 +1,4 @@
+import utils.DuckDNS;
 import utils.NetworkVariables;
 
 import java.io.*;
