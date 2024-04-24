@@ -1,25 +1,30 @@
-FROM debian:latest
+# Use the official Ubuntu Server as a base image
+FROM ubuntu:latest
 
-# Actualizar los repositorios e instalar MySQL Server y cron
-RUN apt-get update && apt-get install -y \
-    mysql-server \
-    cron \
- && rm -rf /var/lib/apt/lists/*
+# Install MySQL Server without prompt for root password (for demonstration purposes)
+RUN apt-get update && \
+    DEBIAN_FRONTEND="noninteractive" apt-get install -y mysql-server && \
+    apt-get clean
 
-# Copiar el script de respaldo al contenedor
+# Install cron (to schedule tasks)
+RUN apt-get update && \
+    apt-get -y install cron && \
+    apt-get clean
+
+# Copy backup script into the container
 COPY backup.sh /usr/local/bin/backup.sh
 
-# Dar permisos de ejecución al script
+# Grant execution permissions to the script
 RUN chmod +x /usr/local/bin/backup.sh
 
-# Copiar el script de cron al contenedor
+# Copy cron job script into the container
 COPY cronjob /etc/cron.d/backup-cron
 
-# Aplicar permisos al script de cron
+# Apply permissions to the cron job script
 RUN chmod 0644 /etc/cron.d/backup-cron
 
-# Activar la configuración de cron
+# Activate the cron configuration
 RUN crontab /etc/cron.d/backup-cron
 
-# Iniciar el servicio de cron y MySQL al iniciar el contenedor
+# Start cron and MySQL services when the container launches
 CMD service cron start && service mysql start && tail -f /dev/null
