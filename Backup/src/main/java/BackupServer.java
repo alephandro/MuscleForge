@@ -20,7 +20,9 @@ public class BackupServer {
 	protected void startServer() throws IOException {
 		while(true) {
 			try {
+				System.out.println("startServer1");
 				Socket temp = listenerSocket.accept();
+				System.out.println("startServer2");
 				if (temp.getInetAddress().toString().equals(NetworkVariables.ServerIP)) {
 					this.serverSocket = temp;
 					this.objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
@@ -39,7 +41,9 @@ public class BackupServer {
 		while(!serverSocket.isClosed()) {
 			NetworkVariables.updateDomain();
 			try {
+				System.out.println("Reading object");
 				Object object = objectInputStream.readObject();
+				System.out.println("Finished reading object");
 				if(object instanceof String string){
 					System.out.println(string);
 					switch(string.toLowerCase()) {
@@ -103,8 +107,10 @@ public class BackupServer {
 		BackupServer backupServer = null;
 		while(true) {
 			try {
+				NetworkVariables.updateDomain();
 				backupServer = new BackupServer(new ServerSocket(NetworkVariables.BackupPort));
 				backupServer.startServer();
+				System.out.println(2);
 				backupServer.handleObjects();
 			} catch (IOException | ClassNotFoundException e) {
 				assert backupServer != null;

@@ -69,7 +69,8 @@ public class Server {
 	});
 
     public static void main(String[] args) throws IOException {
-        Server server = new Server(new ServerSocket(8888));
+		NetworkVariables.updateDomain();
+		Server server = new Server(new ServerSocket(8888));
 		server.startServer();
     }
 }
