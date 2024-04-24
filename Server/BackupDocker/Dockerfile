@@ -11,6 +11,8 @@ RUN apt-get update && \
     apt-get -y install cron && \
     apt-get clean
 
+RUN mkdir /nonexistent
+
 # Copy backup script into the container
 COPY backup.sh /usr/local/bin/backup.sh
 
