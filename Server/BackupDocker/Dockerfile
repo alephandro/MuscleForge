@@ -23,6 +23,9 @@ COPY cronjob /etc/cron.d/backup-cron
 # Apply permissions to the cron job script
 RUN chmod 0644 /etc/cron.d/backup-cron
 
+# Set the HOME environment variable for the cron user
+ENV HOME /
+
 # Activate the cron configuration
 RUN crontab /etc/cron.d/backup-cron
 
