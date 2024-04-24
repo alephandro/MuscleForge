@@ -13,7 +13,8 @@ services:
       - db
 
   db:
-    image: mysql:latest
+    # will build ./BackupDocker/Dockerfile
+    build: ./BackupDocker
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: MuscleForge
