@@ -86,6 +86,8 @@ public class DataBase {
 					" MuscleForge > " + backupPath);
 			process.waitFor();
 
+			Thread.sleep(5000);
+
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line;
 			while ((line = reader.readLine()) != null) {
