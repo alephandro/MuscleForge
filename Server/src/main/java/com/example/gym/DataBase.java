@@ -99,6 +99,8 @@ public class DataBase {
 			String line;
 			StringBuilder query = new StringBuilder();
 			stmt.executeUpdate("DROP SCHEMA IF EXISTS MuscleForge;");
+			stmt.executeUpdate("CREATE SCHEMA MuscleForge;");
+			stmt.executeUpdate("USE MuscleForge;");
 			while ((line = reader.readLine()) != null) {
 				if (!line.trim().startsWith("--") && !line.trim().isEmpty()) {
 					query.append(line);
