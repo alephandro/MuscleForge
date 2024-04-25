@@ -60,8 +60,12 @@ public class Server {
 					throw new RuntimeException(e);
 				}
 
-				NetworkVariables.updateDomain();
-				backupHandler.connectToBackupServer();
+                try {
+                    NetworkVariables.updateDomain();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                backupHandler.connectToBackupServer();
 				backupHandler.saveDatabase();
 				backupHandler.close();
 			}
@@ -69,7 +73,14 @@ public class Server {
 	});
 
     public static void main(String[] args) throws IOException {
-		NetworkVariables.updateDomain();
+		while(true){
+            try {
+                NetworkVariables.updateDomain();
+                break;
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
 		Server server = new Server(new ServerSocket(8888));
 		server.startServer();
     }

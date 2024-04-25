@@ -1,5 +1,6 @@
 package utils;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -15,17 +16,14 @@ public class NetworkVariables {
 	public static String ServerIP = getIPFromDNS(ServerDomain);
 
 
-	public static void updateDomain(){
+    public static void updateDomain() throws IOException {
 		try {
-			// Construye la URL de actualización de utils.DuckDNS
 			String updateUrl = "https://www.duckdns.org/update?domains=" + BackupDomain + "&token=" + DuckDnsToken + "&ip=";
 			URL url = new URL(updateUrl);
 
-			// Abre una conexión HTTP
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");
 
-			// Obtiene la respuesta
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			String inputLine;
 			StringBuilder response = new StringBuilder();
@@ -35,20 +33,22 @@ public class NetworkVariables {
 			in.close();
 			ServerIP = getIPFromDNS(ServerDomain);
 
-			// Imprime la respuesta del servidor utils.DuckDNS
 			System.out.println("Respuesta de DuckDNS: " + response.toString());
 			System.out.println(ServerIP);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 	}
 
-	public static String getIPFromDNS(String url) {
-        try {
-			InetAddress address = InetAddress.getByName(url);
-			return address.getHostAddress();
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
-        }
+	public static String getIPFromDNS(String url){
+        while(true) {
+			try{
+				InetAddress address = InetAddress.getByName(url);
+				return address.getHostAddress();
+			} catch (UnknownHostException e){
+				e.printStackTrace();
+			}
+		}
 	}
 }
