@@ -11,10 +11,11 @@ services:
       - db
     volumes:
       - shared-data:/shared-data
-
+      - /var/run/docker.sock:/var/run/docker.sock
   db:
-    # will build ./BackupDocker/Dockerfile
-    build: ./BackupDocker/
+    build: ./BackupDocker
+    environment:
+      MYSQL_ROOT_PASSWORD: root
     ports:
       - "3306:3306"
     networks:
