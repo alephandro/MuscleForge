@@ -81,18 +81,9 @@ public class DataBase {
 	public static String saveDatabase() {
 		try (Connection conn = DriverManager.getConnection(url, user, password)) {
 
-			Process process = Runtime.getRuntime().exec("docker exec -i server_db_1 mysqldump -u "
-					+ user + " -p" + password +
-					" MuscleForge > " + backupPath);
+
+			Process process = Runtime.getRuntime().exec(new String[]{"bash", "-c", "docker exec -i server_db_1 mysqldump -u root -proot MuscleForge > /shared-data/backup.sql"});
 			process.waitFor();
-
-			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			String line;
-			while ((line = reader.readLine()) != null) {
-				System.out.println(line);
-			}
-
-			reader.close();
 			return backupPath;
 		} catch (SQLException | InterruptedException | IOException ex) {
 			ex.printStackTrace();
@@ -108,6 +99,8 @@ public class DataBase {
 			String line;
 			StringBuilder query = new StringBuilder();
 			stmt.executeUpdate("DROP SCHEMA IF EXISTS MuscleForge;");
+			stmt.executeUpdate("CREATE SCHEMA MuscleForge;");
+			stmt.executeUpdate("USE MuscleForge;");
 			while ((line = reader.readLine()) != null) {
 				if (!line.trim().startsWith("--") && !line.trim().isEmpty()) {
 					query.append(line);
