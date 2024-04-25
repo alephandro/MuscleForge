@@ -47,7 +47,7 @@ public class NetworkVariables {
 				InetAddress address = InetAddress.getByName(url);
 				return address.getHostAddress();
 			} catch (UnknownHostException e){
-				System.out.println(e);
+				System.out.println("Error DNS");
 			}
 		}
 	}
