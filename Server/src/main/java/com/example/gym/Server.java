@@ -46,7 +46,7 @@ public class Server {
             if(serverSocket != null)
                 serverSocket.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
 
@@ -78,7 +78,7 @@ public class Server {
                 NetworkVariables.updateDomain();
                 break;
             } catch (IOException e){
-                e.printStackTrace();
+                System.out.println(e);
             }
         }
 		Server server = new Server(new ServerSocket(8888));

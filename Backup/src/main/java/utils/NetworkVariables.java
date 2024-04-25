@@ -36,7 +36,7 @@ public class NetworkVariables {
 			System.out.println("Respuesta de DuckDNS: " + response.toString());
 			System.out.println(ServerIP);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e);
 			throw e;
 		}
 	}
@@ -47,7 +47,7 @@ public class NetworkVariables {
 				InetAddress address = InetAddress.getByName(url);
 				return address.getHostAddress();
 			} catch (UnknownHostException e){
-				e.printStackTrace();
+				System.out.println(e);
 			}
 		}
 	}
