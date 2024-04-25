@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+
 public class BackupServer {
 
     protected ServerSocket listenerSocket;
@@ -35,7 +36,7 @@ public class BackupServer {
 		}
     }
 
-	protected void handleObjects() throws IOException, ClassNotFoundException {
+	protected void handleObjects() throws IOException, ClassNotFoundException, RuntimeException {
 		while(!serverSocket.isClosed()) {
 			NetworkVariables.updateDomain();
 			try {
@@ -51,7 +52,7 @@ public class BackupServer {
 							break;
 					}
 				}
-			} catch (IOException | ClassNotFoundException e) {
+			} catch (IOException | ClassNotFoundException | RuntimeException e) {
 				close();
 				throw e;
 			}
@@ -68,7 +69,7 @@ public class BackupServer {
 			}
 			fileOutputStream.write(buffer, 0, count);
 			fileOutputStream.close();
-		} catch (IOException e) {
+		} catch (IOException | IndexOutOfBoundsException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -87,7 +88,7 @@ public class BackupServer {
 		}
 	}
 
-    protected void close() {
+    protected void close() throws IOException{
         try {
 			System.out.println("Closing the connection");
 			if(serverSocket != null)
@@ -96,21 +97,29 @@ public class BackupServer {
                 listenerSocket.close();
         } catch (IOException e) {
 			System.out.println(e);
+			throw e;
         }
     }
+
 
     public static void main(String[] args) {
 		BackupServer backupServer = null;
 		while(true) {
 			try {
+				backupServer = null;
 				NetworkVariables.updateDomain();
 				backupServer = new BackupServer(new ServerSocket(NetworkVariables.BackupPort));
 				backupServer.startServer();
 				backupServer.handleObjects();
-			} catch (IOException | ClassNotFoundException e) {
-				assert backupServer != null;
-				backupServer.close();
-				continue;
+			} catch (IOException | ClassNotFoundException |RuntimeException e) {
+				while (true){
+					try {
+						assert backupServer != null;
+						backupServer.close();
+						System.out.println("Restarting Backup Server");
+						break;
+					} catch (IOException ex) {}
+				}
 			}
 		}
     }
