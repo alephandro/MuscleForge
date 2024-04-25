@@ -12,11 +12,13 @@ public class NetworkVariables {
     public static String ServerIP = getIPFromDNS(ServerDomain); //10.0.2.2 for localhost
 
     public static String getIPFromDNS(String url) {
-        try {
-            InetAddress address = InetAddress.getByName(url);
-            return address.getHostAddress();
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
+        while(true){
+            try {
+                InetAddress address = InetAddress.getByName(url);
+                return address.getHostAddress();
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
         }
     }
 
