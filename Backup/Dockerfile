@@ -16,4 +16,4 @@ RUN mvn compile
 EXPOSE 8888
 
 # Run the application
-CMD ["mvn", "exec:java", "-Dexec.mainClass=com.example.gym.BackupServer"]
+CMD ["mvn", "exec:java", "-Dexec.mainClass=BackupServer"]
