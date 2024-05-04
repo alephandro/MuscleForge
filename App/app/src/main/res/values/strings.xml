@@ -12,4 +12,6 @@
     <string name="title_activity_main_menu">MainMenuActivity</string>
     <string name="title_activity_view_trainings">ViewTrainingsActivity</string>
     <string name="title_activity_detailed_exercise">DetailedExerciseActivity</string>
+    <string name="title_activity_consult_history">ConsultHistoryActivity</string>
+    <string name="title_activity_workout">WorkoutActivity</string>
 </resources>

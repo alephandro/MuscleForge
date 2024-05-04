@@ -1,6 +1,7 @@
 package com.example.gym;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputType;
@@ -17,17 +18,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R.id;
 import com.example.gym.utils.Exercise;
+import com.example.gym.utils.PerformedExercise;
 import com.example.gym.utils.Series;
+import com.example.gym.utils.Workout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DetailedExerciseActivity extends AppCompatActivity {
 
+    private Workout workout;
     private Exercise exercise;
     private LinearLayout seriesLayout;
     private int seriesCounter = 1;
-    private List<Series> seriesList;
 
     @SuppressLint({"MissingInflatedId", "SetTextI18n"})
     @Override
@@ -36,8 +39,7 @@ public class DetailedExerciseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detailed_exercise);
         seriesLayout = findViewById(R.id.seriesLayout);
 
-        seriesList = new ArrayList<>();
-
+        workout = (Workout) getIntent().getSerializableExtra("workout");
         exercise = (Exercise) getIntent().getSerializableExtra("exercise");
 
         TextView textViewNombre = findViewById(id.textViewName);
@@ -64,6 +66,8 @@ public class DetailedExerciseActivity extends AppCompatActivity {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                PerformedExercise performedExercise = new PerformedExercise(exercise);
+
                 for (int i = 0; i < seriesLayout.getChildCount(); i++) {
                     View seriesView = seriesLayout.getChildAt(i);
                     if (seriesView instanceof LinearLayout) {
@@ -71,14 +75,18 @@ public class DetailedExerciseActivity extends AppCompatActivity {
                         LinearLayout seriesLayout = (LinearLayout) seriesView;
                         EditText reps = (EditText) seriesLayout.getChildAt(1);
                         EditText weight = (EditText) seriesLayout.getChildAt(2);
-                        series = new Series(exercise, reps.getText().toString(),
-                                weight.getText().toString());
-                        seriesList.add(series);
+                        series = new Series(reps.getText().toString(), weight.getText().toString());
+                        performedExercise.addSeries(series);
                     }
                 }
-                System.out.println(seriesList);
                 Toast.makeText(DetailedExerciseActivity.this, "Guardado correctamente!",
                         Toast.LENGTH_SHORT).show();
+                workout.addPerformedExercise(performedExercise);
+
+                Intent intent = new Intent(DetailedExerciseActivity.this,
+                        WorkoutActivity.class);
+                intent.putExtra("workout", workout);
+                startActivity(intent);
                 finish();
             }
         });

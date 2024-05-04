@@ -16,10 +16,10 @@
         android:id="@+id/buttonViewTrainings"
         android:layout_width="200dp"
         android:layout_height="80dp"
-        android:text="Consultar Entrenamientos"
-        android:textSize="18sp"
         android:layout_below="@id/buttonAddTraining"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp"
+        android:text="Consultar Historial"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/buttonDeleteTraining"

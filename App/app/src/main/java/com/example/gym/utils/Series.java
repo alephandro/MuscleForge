@@ -1,19 +1,19 @@
 package com.example.gym.utils;
 
-public class Series {
+import java.io.Serializable;
 
-    private Exercise exercise;
-    private String reps;
-    private String weight;
+public class Series implements Serializable {
 
-    public Series (Exercise exercise, String reps, String weight) {
-        this.exercise = exercise;
-        this.reps = reps;
-        this.weight = weight;
+    private int reps;
+    private float weight;
+
+    public Series (String reps, String weight) {
+        this.reps = Integer.parseInt(reps);
+        this.weight = Float.parseFloat(weight);
     }
 
     @Override
     public String toString() {
-        return exercise.getName() + ": reps = " + this.reps + " and weight = " + this.weight + " kg";
+        return (this.reps + " x " + this.weight + "kg");
     }
 }

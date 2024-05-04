@@ -11,22 +11,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gym.utils.Client;
 import com.example.gym.utils.Exercise;
-import com.example.gym.utils.WorkoutAdapter;
+import com.example.gym.utils.OldWorkoutAdapter;
+import com.example.gym.utils.Workout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ViewTrainingsActivity extends AppCompatActivity {
 
+    private Workout workout;
     RecyclerView recyclerView;
     List trainings = new ArrayList<>();
-    WorkoutAdapter adapter;
+    OldWorkoutAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_trainings);
 
+        workout = (Workout) getIntent().getSerializableExtra("workout");
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -52,17 +55,19 @@ public class ViewTrainingsActivity extends AppCompatActivity {
         });
 
 
-        adapter = new WorkoutAdapter(trainings);
+        adapter = new OldWorkoutAdapter(trainings);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new WorkoutAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new OldWorkoutAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Exercise exercise) {
                 // Abrir la nueva actividad cuando se hace clic en un elemento de la lista
                 Intent intent = new Intent(ViewTrainingsActivity.this,
                         DetailedExerciseActivity.class);
                 intent.putExtra("exercise", exercise);
+                intent.putExtra("workout", workout);
                 startActivity(intent);
+                finish();
             }
         });
     }

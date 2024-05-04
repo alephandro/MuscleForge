@@ -16,6 +16,16 @@
         android:theme="@style/Theme.Gym"
         tools:targetApi="31">
         <activity
+            android:name=".WorkoutActivity"
+            android:exported="false"
+            android:label="@string/title_activity_workout"
+            android:theme="@style/Theme.Gym" />
+        <activity
+            android:name=".ConsultHistoryActivity"
+            android:exported="false"
+            android:label="@string/title_activity_consult_history"
+            android:theme="@style/Theme.Gym" />
+        <activity
             android:name=".DetailedExerciseActivity"
             android:exported="false"
             android:label="@string/title_activity_detailed_exercise"

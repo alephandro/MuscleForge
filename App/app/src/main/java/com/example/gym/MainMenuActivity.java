@@ -28,7 +28,7 @@ public class MainMenuActivity extends AppCompatActivity {
         buttonViewTrainings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainMenuActivity.this, ViewTrainingsActivity.class));
+                startActivity(new Intent(MainMenuActivity.this, ConsultHistoryActivity.class));
             }
         });
 
