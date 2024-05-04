@@ -2,6 +2,7 @@ package com.example.gym;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputType;
@@ -94,27 +95,30 @@ public class DetailedExerciseActivity extends AppCompatActivity {
     }
 
     private void addSeries() {
+
+        //Place everything
         LinearLayout newSeriesLayout = new LinearLayout(this);
         newSeriesLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         newSeriesLayout.setOrientation(LinearLayout.HORIZONTAL);
         newSeriesLayout.setGravity(Gravity.CENTER_VERTICAL);
-
-
         Drawable border = getResources().getDrawable(R.drawable.border);
 
+        //Series counter
         TextView textViewCounter = new TextView(this);
         textViewCounter.setText(String.valueOf(seriesCounter));
         textViewCounter.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
         textViewCounter.setGravity(Gravity.CENTER);
 
+        //Repetitions TextBox
         EditText editTextRepetitions = new EditText(this);
         editTextRepetitions.setHint("Repeticiones");
         editTextRepetitions.setInputType(InputType.TYPE_CLASS_NUMBER);
         editTextRepetitions.setSingleLine();
         editTextRepetitions.setBackground(border);
 
+        //Weight TextBox
         EditText editTextWeight = new EditText(this);
         editTextWeight.setHint("Peso kg");
         editTextWeight.setInputType(InputType.TYPE_CLASS_NUMBER
@@ -122,9 +126,28 @@ public class DetailedExerciseActivity extends AppCompatActivity {
         editTextWeight.setSingleLine();
         editTextWeight.setBackground(border);
 
+
+        //Delete button
+        Button deleteButton = new Button(this);
+        deleteButton.setText("X");
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                seriesLayout.removeView(newSeriesLayout);
+                seriesCounter--;
+                int aux = 1;
+                for(int i = 0; i < seriesLayout.getChildCount(); i++) {
+                    LinearLayout l = (LinearLayout)seriesLayout.getChildAt(i);
+                    ((TextView)l.getChildAt(0)).setText(String.valueOf(aux++));
+                }
+            }
+        });
+
+        //Add everything to rig
         newSeriesLayout.addView(textViewCounter);
         newSeriesLayout.addView(editTextRepetitions);
         newSeriesLayout.addView(editTextWeight);
+        newSeriesLayout.addView(deleteButton);
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,

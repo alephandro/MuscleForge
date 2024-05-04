@@ -17,4 +17,9 @@ public class History {
     public void addWorkout(Workout workout) {
         workouts.add(workout);
     }
+
+    public void removeWorkout(int position) {
+        workouts.remove(position);
+    }
+
 }

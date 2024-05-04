@@ -17,6 +17,10 @@ public class PerformedExercise implements Serializable {
         series.add(serie);
     }
 
+    public void removeSeries(int position) {
+        series.remove(position);
+    }
+
     public String toString() {
         String string = type.getName();
         for (Series series1 : this.series) {
