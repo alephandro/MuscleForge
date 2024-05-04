@@ -1,5 +1,6 @@
 package com.example.gym;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,13 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gym.utils.History;
 import com.example.gym.utils.HistoryAdapter;
+import com.example.gym.utils.HistoryStorage;
 import com.example.gym.utils.Workout;
 
 public class ConsultHistoryActivity extends AppCompatActivity {
 
     Workout tempWorkout;
     RecyclerView recyclerView;
-    final History history = new History();
+    History history;
     private HistoryAdapter adapter;
 
     @Override
@@ -25,13 +27,24 @@ public class ConsultHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consult_history);
 
-        tempWorkout = (Workout) getIntent().getSerializableExtra("workout");
-        if(tempWorkout != null)
-            history.addWorkout(tempWorkout);
+        //Get history
+        history = HistoryStorage.getHistory(ConsultHistoryActivity.this);
+        if(history == null)
+            history = new History();
 
+        //Get workout
+        tempWorkout = (Workout) getIntent().getSerializableExtra("workout");
+        if(tempWorkout != null) {
+            history.addWorkout(tempWorkout);
+            //Save history
+            HistoryStorage.saveHistory(ConsultHistoryActivity.this, history);
+        }
+
+        //Get recyclerView (workout list)
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        //Back button
         Button buttonBack = findViewById(R.id.buttonBack);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +54,7 @@ public class ConsultHistoryActivity extends AppCompatActivity {
         });
 
 
+        //Add button
         Button buttonAdd = findViewById(R.id.buttonAdd);
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,9 +67,9 @@ public class ConsultHistoryActivity extends AppCompatActivity {
             }
         });
 
+        //ShowrecyclerView (workout list)
         adapter = new HistoryAdapter(history.getWorkouts());
         recyclerView.setAdapter(adapter);
-
         adapter.setOnItemClickListener(new HistoryAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Workout workout) {
