@@ -25,7 +25,7 @@ public class History {
         workouts.add(workout);
     }
 
-    public void removeWorkout(int position) {
-        workouts.remove(position);
+    public void removeWorkout(Workout workout) {
+        workouts.remove(workout);
     }
 }

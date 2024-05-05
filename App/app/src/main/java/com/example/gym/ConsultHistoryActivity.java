@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,8 +37,13 @@ public class ConsultHistoryActivity extends AppCompatActivity {
         tempWorkout = (Workout) getIntent().getSerializableExtra("workout");
         if(tempWorkout != null) {
             history.addWorkout(tempWorkout);
-            //Save history
+            if(getIntent().getSerializableExtra("delete") != null) {
+                history.removeWorkout(tempWorkout);
+                Toast.makeText(ConsultHistoryActivity.this, "Entrenamiento borrado", Toast.LENGTH_SHORT).show();
+            }
+
         }
+        //Save history
         HistoryStorage.saveHistory(ConsultHistoryActivity.this, history);
 
         //Get recyclerView (workout list)

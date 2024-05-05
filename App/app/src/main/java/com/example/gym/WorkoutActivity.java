@@ -114,5 +114,18 @@ public class WorkoutActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        Button buttonDelete = findViewById(R.id.buttonDelete);
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WorkoutActivity.this,
+                        ConsultHistoryActivity.class);
+                intent.putExtra("workout", workout);
+                intent.putExtra("delete", "delete");
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }
