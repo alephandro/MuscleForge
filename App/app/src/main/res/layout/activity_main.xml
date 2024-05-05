@@ -9,7 +9,7 @@
         android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="App Gimnasio"
+        android:text="Muscle Forge"
         android:textSize="24sp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"/>
