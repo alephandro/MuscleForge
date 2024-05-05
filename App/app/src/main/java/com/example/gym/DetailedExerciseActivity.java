@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.util.TypedValue;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R.id;
@@ -30,6 +31,7 @@ public class DetailedExerciseActivity extends AppCompatActivity {
 
     private Workout workout;
     private Exercise exercise;
+    private PerformedExercise performedExercise;
     private LinearLayout seriesLayout;
     private int seriesCounter = 1;
 
@@ -42,6 +44,13 @@ public class DetailedExerciseActivity extends AppCompatActivity {
 
         workout = (Workout) getIntent().getSerializableExtra("workout");
         exercise = (Exercise) getIntent().getSerializableExtra("exercise");
+        performedExercise = (PerformedExercise) getIntent().getSerializableExtra("performedExercise");
+        if(performedExercise != null) {
+            exercise = performedExercise.getType();
+            for (Series series : performedExercise.getSeries()) {
+                addSeries("" + series.getReps(), "" + series.getWeight());
+            }
+        }
 
         TextView textViewNombre = findViewById(id.textViewName);
         TextView textViewGrupoMuscular = findViewById(R.id.textViewMuscleGroup);
@@ -58,7 +67,7 @@ public class DetailedExerciseActivity extends AppCompatActivity {
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addSeries();
+                addSeries(null, null);
             }
         });
 
@@ -94,7 +103,7 @@ public class DetailedExerciseActivity extends AppCompatActivity {
 
     }
 
-    private void addSeries() {
+    private void addSeries(@Nullable String series, @Nullable String weight) {
 
         //Place everything
         LinearLayout newSeriesLayout = new LinearLayout(this);
@@ -117,6 +126,9 @@ public class DetailedExerciseActivity extends AppCompatActivity {
         editTextRepetitions.setInputType(InputType.TYPE_CLASS_NUMBER);
         editTextRepetitions.setSingleLine();
         editTextRepetitions.setBackground(border);
+        if(series != null)
+            editTextRepetitions.setText(series);
+
 
         //Weight TextBox
         EditText editTextWeight = new EditText(this);
@@ -125,6 +137,8 @@ public class DetailedExerciseActivity extends AppCompatActivity {
                 | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         editTextWeight.setSingleLine();
         editTextWeight.setBackground(border);
+        if(weight != null)
+            editTextWeight.setText(weight);
 
 
         //Delete button
@@ -159,6 +173,5 @@ public class DetailedExerciseActivity extends AppCompatActivity {
 
         seriesCounter++;
     }
-
 
 }

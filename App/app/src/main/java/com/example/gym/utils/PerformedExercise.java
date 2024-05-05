@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class PerformedExercise implements Serializable {
 
     private Exercise type;
+
     private ArrayList<Series> series;
 
     public PerformedExercise(Exercise type) {
@@ -27,6 +28,14 @@ public class PerformedExercise implements Serializable {
             string += "\n" + series1.toString();
         }
         return string;
+    }
+
+    public Exercise getType() {
+        return type;
+    }
+
+    public ArrayList<Series> getSeries() {
+        return series;
     }
 
 }

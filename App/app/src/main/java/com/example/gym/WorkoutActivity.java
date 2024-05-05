@@ -53,6 +53,19 @@ public class WorkoutActivity extends AppCompatActivity {
             newExerciseLayout.setGravity(Gravity.CENTER_VERTICAL);
             Drawable border = getResources().getDrawable(R.drawable.border);
 
+            newExerciseLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(WorkoutActivity.this,
+                            DetailedExerciseActivity.class);
+                    workout.removePerformedExercise(pe);
+                    intent.putExtra("performedExercise", pe);
+                    intent.putExtra("workout", workout);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+
             //Performed exercise counter
             TextView textViewCounter = new TextView(this);
             textViewCounter.setText(String.valueOf(performedExercisesCounter));

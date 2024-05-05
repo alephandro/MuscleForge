@@ -24,4 +24,12 @@ public class Series implements Serializable {
     public String toString() {
         return (this.reps + " x " + this.weight + "kg");
     }
+
+    public int getReps() {
+        return reps;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
 }

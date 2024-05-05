@@ -27,6 +27,10 @@ public class Workout implements Serializable {
         performedExercises.remove(position);
     }
 
+    public void removePerformedExercise(PerformedExercise performedExercise) {
+        performedExercises.remove(performedExercise);
+    }
+
     public String toString() {
         String string = "";
         for (PerformedExercise pe : performedExercises) {
