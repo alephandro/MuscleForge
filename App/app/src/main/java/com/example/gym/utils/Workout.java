@@ -14,8 +14,8 @@ public class Workout implements Serializable {
     private ArrayList<PerformedExercise> performedExercises;
 
     public Workout() {
-        this.name = "";
         this.date = new Date();
+        this.name = "Workout " + date.toString().substring(0, 10) + " " + date.toString().substring(30, 34);
         this.performedExercises = new ArrayList<>();
     }
 

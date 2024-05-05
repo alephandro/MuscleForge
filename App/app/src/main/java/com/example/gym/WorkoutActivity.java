@@ -110,11 +110,6 @@ public class WorkoutActivity extends AppCompatActivity {
                 Intent intent = new Intent(WorkoutActivity.this,
                         ConsultHistoryActivity.class);
                 intent.putExtra("workout", workout);
-                Toast.makeText(
-                        WorkoutActivity.this,
-                        "This workout " + workout.getPerformedExercises().size(),
-                        Toast.LENGTH_SHORT)
-                        .show();
                 startActivity(intent);
                 finish();
             }
