@@ -8,8 +8,16 @@ public class Series implements Serializable {
     private float weight;
 
     public Series (String reps, String weight) {
-        this.reps = Integer.parseInt(reps);
-        this.weight = Float.parseFloat(weight);
+        try {
+            this.reps = Integer.parseInt(reps);
+        } catch (NumberFormatException e) {
+            this.reps = 0;
+        }
+        try {
+            this.weight = Float.parseFloat(weight);
+        } catch (NumberFormatException | NullPointerException e) {
+            this.weight = 0;
+        }
     }
 
     @Override
