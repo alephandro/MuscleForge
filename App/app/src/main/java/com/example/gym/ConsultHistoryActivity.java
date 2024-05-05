@@ -37,8 +37,8 @@ public class ConsultHistoryActivity extends AppCompatActivity {
         if(tempWorkout != null) {
             history.addWorkout(tempWorkout);
             //Save history
-            HistoryStorage.saveHistory(ConsultHistoryActivity.this, history);
         }
+        HistoryStorage.saveHistory(ConsultHistoryActivity.this, history);
 
         //Get recyclerView (workout list)
         recyclerView = findViewById(R.id.recyclerView);

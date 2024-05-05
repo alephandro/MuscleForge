@@ -2,11 +2,15 @@ package com.example.gym;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,7 +24,6 @@ public class WorkoutActivity extends AppCompatActivity {
     private Workout workout;
     private LinearLayout performedExercisesLayout;
     private int performedExercisesCounter = 1;
-    private ArrayList<PerformedExercise> performedExercisesList;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -29,7 +32,6 @@ public class WorkoutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_workout);
         performedExercisesLayout = findViewById(R.id.performedExercisesLayout);
         workout = (Workout) getIntent().getSerializableExtra("workout");
-        performedExercisesList = workout.getPerformedExercises();
 
         TextView textViewName = findViewById(R.id.textViewName);
         TextView textViewDate = findViewById(R.id.textViewDate);
@@ -39,12 +41,56 @@ public class WorkoutActivity extends AppCompatActivity {
             textViewDate.setText(workout.getDate().toString());
         }
 
-        for (PerformedExercise pe : performedExercisesList) {
+        //Every exercise
+        for (PerformedExercise pe : workout.getPerformedExercises()) {
+
+            //Linear layout
+            LinearLayout newExerciseLayout = new LinearLayout(this);
+            newExerciseLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
+            newExerciseLayout.setOrientation(LinearLayout.HORIZONTAL);
+            newExerciseLayout.setGravity(Gravity.CENTER_VERTICAL);
+            Drawable border = getResources().getDrawable(R.drawable.border);
+
+            //Performed exercise counter
+            TextView textViewCounter = new TextView(this);
+            textViewCounter.setText(String.valueOf(performedExercisesCounter));
+            textViewCounter.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+            textViewCounter.setGravity(Gravity.CENTER);
+
+            //Exercise
             TextView textViewPerformedExercise = new TextView(this);
             textViewPerformedExercise.setText(pe.toString());
-            performedExercisesLayout.addView(textViewPerformedExercise);
+
+            //Delete button
+            Button deleteButton = new Button(this);
+            deleteButton.setText("X");
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    performedExercisesLayout.removeView(newExerciseLayout);
+                    String posS = ((TextView)newExerciseLayout.getChildAt(0)).getText().toString();
+                    int pos = Integer.parseInt(posS);
+
+                    int aux = 1;
+                    for(int i = 0; i < performedExercisesLayout.getChildCount(); i++) {
+                        LinearLayout l = (LinearLayout)performedExercisesLayout.getChildAt(i);
+                        ((TextView)l.getChildAt(0)).setText(String.valueOf(aux++));
+                    }
+                    workout.removePerformedExercise(pos - 1);
+                }
+            });
+
+            newExerciseLayout.addView(textViewCounter);
+            newExerciseLayout.addView(textViewPerformedExercise);
+            newExerciseLayout.addView(deleteButton);
+            performedExercisesLayout.addView(newExerciseLayout);
+
+            performedExercisesCounter++;
         }
 
+        //Add button
         Button buttonAdd = findViewById(R.id.buttonAdd);
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +110,11 @@ public class WorkoutActivity extends AppCompatActivity {
                 Intent intent = new Intent(WorkoutActivity.this,
                         ConsultHistoryActivity.class);
                 intent.putExtra("workout", workout);
+                Toast.makeText(
+                        WorkoutActivity.this,
+                        "This workout " + workout.getPerformedExercises().size(),
+                        Toast.LENGTH_SHORT)
+                        .show();
                 startActivity(intent);
                 finish();
             }

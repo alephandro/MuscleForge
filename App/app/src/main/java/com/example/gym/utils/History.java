@@ -15,11 +15,17 @@ public class History {
     }
 
     public void addWorkout(Workout workout) {
+        Workout victim = null;
+        for (Workout w : workouts) {
+            if(w.equals(workout)) {
+                victim = w;
+            }
+        }
+        workouts.remove(victim);
         workouts.add(workout);
     }
 
     public void removeWorkout(int position) {
         workouts.remove(position);
     }
-
 }

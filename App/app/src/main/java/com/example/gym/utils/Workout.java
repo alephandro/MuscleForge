@@ -1,5 +1,7 @@
 package com.example.gym.utils;
 
+import androidx.annotation.Nullable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,6 +49,14 @@ public class Workout implements Serializable {
 
     public ArrayList<PerformedExercise> getPerformedExercises() {
         return performedExercises;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(obj instanceof Workout workout) {
+            return workout.getDate().equals(this.date);
+        } else
+            return super.equals(obj);
     }
 
 }
