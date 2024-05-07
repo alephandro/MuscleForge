@@ -15,4 +15,5 @@
     <string name="title_activity_consult_history">ConsultHistoryActivity</string>
     <string name="title_activity_workout">WorkoutActivity</string>
     <string name="title_activity_new_exercise">NewExerciseActivity</string>
+    <string name="title_activity_view_your_trainings">ViewYourTrainingsActivity</string>
 </resources>

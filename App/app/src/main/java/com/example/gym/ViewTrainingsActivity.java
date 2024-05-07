@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.gym.utils.Client;
 import com.example.gym.utils.Exercise;
 import com.example.gym.utils.ExerciseStorage;
-import com.example.gym.utils.OldWorkoutAdapter;
+import com.example.gym.utils.ExerciseAdapter;
 import com.example.gym.utils.Workout;
 
 import java.util.ArrayList;
@@ -22,8 +22,8 @@ public class ViewTrainingsActivity extends AppCompatActivity {
 
     private Workout workout;
     RecyclerView recyclerView;
-    List trainings = new ArrayList<>();
-    OldWorkoutAdapter adapter;
+    List exercises = new ArrayList<>();
+    ExerciseAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class ViewTrainingsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        trainings = new ArrayList<>();
+        exercises = new ArrayList<>();
 
         Client client = new Client();
         Object object = client.sendMessage("SELECT * FROM exercises");
@@ -43,12 +43,12 @@ public class ViewTrainingsActivity extends AppCompatActivity {
         System.out.println(object.getClass());
 
         if(object.getClass().equals(ArrayList.class)) {
-            this.trainings = (ArrayList) object;
-            ArrayList<Exercise> exercises = ExerciseStorage.getExercises(ViewTrainingsActivity.this);
-            if(exercises == null)
-                exercises = new ArrayList<>();
+            this.exercises = (ArrayList) object;
+            ArrayList<Exercise> myExercises = ExerciseStorage.getExercises(ViewTrainingsActivity.this);
+            if(myExercises == null)
+                myExercises = new ArrayList<>();
 
-            this.trainings.addAll(exercises);
+            this.exercises.addAll(myExercises);
         }
 
         Button buttonBack = findViewById(R.id.buttonBack);
@@ -61,10 +61,10 @@ public class ViewTrainingsActivity extends AppCompatActivity {
         });
 
 
-        adapter = new OldWorkoutAdapter(trainings);
+        adapter = new ExerciseAdapter(exercises);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new OldWorkoutAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new ExerciseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Exercise exercise) {
                 // Abrir la nueva actividad cuando se hace clic en un elemento de la lista

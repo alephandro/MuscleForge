@@ -12,10 +12,10 @@ import com.example.gym.R;
 
 import java.util.List;
 
-public class OldWorkoutAdapter extends RecyclerView.Adapter<OldWorkoutAdapter.EntrenamientoViewHolder>{
+public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.EntrenamientoViewHolder>{
     private List<Exercise> exercises;
 
-    public OldWorkoutAdapter(List<Exercise> entrenamientos) {
+    public ExerciseAdapter(List<Exercise> entrenamientos) {
         this.exercises = entrenamientos;
     }
     private OnItemClickListener listener;

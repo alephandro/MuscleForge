@@ -21,7 +21,7 @@ public class MainMenuActivity extends AppCompatActivity {
         buttonAddTraining.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(MainMenuActivity.this, AddTrainingActivity.class));
+                startActivity(new Intent(MainMenuActivity.this, NewExerciseActivity.class));
             }
         });
 
@@ -35,7 +35,7 @@ public class MainMenuActivity extends AppCompatActivity {
         buttonDeleteTraining.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(MainMenuActivity.this, DeleteTrainingActivity.class));
+                startActivity(new Intent(MainMenuActivity.this, ViewYourTrainingsActivity.class));
             }
         });
     }
