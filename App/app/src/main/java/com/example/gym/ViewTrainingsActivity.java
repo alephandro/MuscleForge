@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gym.utils.Client;
 import com.example.gym.utils.Exercise;
+import com.example.gym.utils.ExerciseStorage;
 import com.example.gym.utils.OldWorkoutAdapter;
 import com.example.gym.utils.Workout;
 
@@ -43,6 +44,11 @@ public class ViewTrainingsActivity extends AppCompatActivity {
 
         if(object.getClass().equals(ArrayList.class)) {
             this.trainings = (ArrayList) object;
+            ArrayList<Exercise> exercises = ExerciseStorage.getExercises(ViewTrainingsActivity.this);
+            if(exercises == null)
+                exercises = new ArrayList<>();
+
+            this.trainings.addAll(exercises);
         }
 
         Button buttonBack = findViewById(R.id.buttonBack);
