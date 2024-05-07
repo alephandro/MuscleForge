@@ -15,31 +15,31 @@
         android:textSize="24sp" />
 
     <Button
+        android:id="@+id/buttonViewTrainings"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="20dp"
+        android:text="Consultar Entrenamientos"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp" />
+
+    <Button
         android:id="@+id/buttonAddTraining"
         android:layout_width="200dp"
         android:layout_height="80dp"
-        android:text="Añadir Entrenamiento"
+        android:layout_below="@id/buttonViewTrainings"
+        android:text="Añadir Ejercicio"
         android:layout_centerHorizontal="true"
         android:textSize="18sp"
         android:layout_marginBottom="20dp"/>
 
     <Button
-        android:id="@+id/buttonViewTrainings"
-        android:layout_width="200dp"
-        android:layout_height="80dp"
-        android:layout_below="@id/buttonAddTraining"
-        android:layout_marginBottom="20dp"
-        android:text="Consultar Historial"
-        android:layout_centerHorizontal="true"
-        android:textSize="18sp" />
-
-    <Button
         android:id="@+id/buttonDeleteTraining"
         android:layout_width="200dp"
         android:layout_height="80dp"
-        android:text="Eliminar Entrenamiento"
+        android:text="Eliminar Ejercicio"
         android:layout_centerHorizontal="true"
         android:textSize="18sp"
-        android:layout_below="@id/buttonViewTrainings"/>
+        android:layout_below="@id/buttonAddTraining"/>
 
 </RelativeLayout>
