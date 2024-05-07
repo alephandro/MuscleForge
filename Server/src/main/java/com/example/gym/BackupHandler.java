@@ -22,7 +22,7 @@ public class BackupHandler {
 			try {
 				timeout = 5;
 				this.backupSocket = new Socket();
-				this.backupSocket.connect(new InetSocketAddress(NetworkVariables.BackupIP, NetworkVariables.BackupPort),
+				this.backupSocket.connect(new InetSocketAddress(NetworkVariables.BackupDomain, NetworkVariables.BackupPort),
 						5000);
 				timeout = 0;
 				this.backupOutputStream = new ObjectOutputStream(backupSocket.getOutputStream());

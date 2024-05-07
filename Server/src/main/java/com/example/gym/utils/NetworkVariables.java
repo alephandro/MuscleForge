@@ -11,9 +11,8 @@ public class NetworkVariables {
 
 	public static final int BackupPort = 8888;
 	private static final String DuckDnsToken = "732fcb36-116b-470d-bb46-5addb4679007";
-	private static final String ServerDomain = "muscleforge-server.duckdns.org";
-	private static final String BackupDomain = "muscleforge-backup.duckdns.org";
-	public static String BackupIP = getIPFromDNS(ServerDomain);
+	public static final String ServerDomain = "muscleforge-server.duckdns.org";
+	public static final String BackupDomain = "muscleforge-backup.duckdns.org";
 
 
 	public static void updateDomain() throws IOException {
@@ -31,22 +30,13 @@ public class NetworkVariables {
 				response.append(inputLine);
 			}
 			in.close();
-			BackupIP = getIPFromDNS(BackupDomain);
 
 			System.out.println("Respuesta de DuckDNS: " + response.toString());
-			System.out.println(BackupIP);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 	}
 
-	public static String getIPFromDNS(String url) {
-		while (true){
-			try {
-				InetAddress address = InetAddress.getByName(url);
-				return address.getHostAddress();
-			} catch (UnknownHostException e){}
-		}
-	}
+
 }
