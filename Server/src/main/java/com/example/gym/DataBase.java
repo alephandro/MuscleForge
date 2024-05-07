@@ -65,7 +65,7 @@ public class DataBase {
 				valorColumna2 = databaseResult.getString("muscle_group");
 				valorColumna3 = databaseResult.getString("description");
 
-				exercise = new Exercise(valorColumna1, valorColumna2, valorColumna3);
+				exercise = new Exercise(valorColumna1, valorColumna2, valorColumna3, true);
 				result.add(exercise);
 
 			}
