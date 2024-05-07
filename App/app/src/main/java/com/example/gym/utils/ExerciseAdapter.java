@@ -56,7 +56,6 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
             name = itemView.findViewById(R.id.name);
             muscleGroup = itemView.findViewById(R.id.muscleGroup);
             deleteButton = itemView.findViewById(R.id.deleteButton);
-            deleteButton.setVisibility(View.GONE);
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -71,7 +70,9 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
             name.setText(exercise.getName());
             muscleGroup.setText(exercise.getMuscleGroup());
             if(exercise.isDefault())
-                deleteButton.setVisibility(View.GONE);
+                deleteButton.setVisibility(View.INVISIBLE);
+            else
+                deleteButton.setVisibility(View.VISIBLE);
         }
     }
 

@@ -34,12 +34,12 @@ public class ViewExercisesActivity extends AppCompatActivity implements Exercise
 
         //Get exercises
         //Get exercises from database
-        /*Client client = new Client();
+        Client client = new Client();
         Object object = client.sendMessage("SELECT * FROM exercises");
         client.close();
 
         if(object.getClass().equals(ArrayList.class))
-            this.exercises.addAll((ArrayList) object);*/
+            this.exercises.addAll((ArrayList) object);
 
         //Get exercises from local storage
         ArrayList<Exercise> myExercises = ExerciseStorage.getExercises(ViewExercisesActivity.this);

@@ -7,21 +7,21 @@
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="142dp"
-        android:layout_height="wrap_content"
+        android:layout_width="160dp"
+        android:layout_height="50dp"
         android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/muscleGroup"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_width="160dp"
+        android:layout_height="50dp"
         android:layout_weight="1"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/deleteButton"
-        android:layout_width="117dp"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="X" />
