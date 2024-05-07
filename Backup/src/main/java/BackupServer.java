@@ -22,12 +22,9 @@ public class BackupServer {
 		while(true) {
 			try {
 				Socket temp = listenerSocket.accept();
-				if (temp.getInetAddress().toString().equals("/10.0.2.2")) {
-					this.serverSocket = temp;
-					this.objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
-					this.objectInputStream = new ObjectInputStream(serverSocket.getInputStream());
-				} else
-					continue;
+				this.serverSocket = temp;
+				this.objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
+				this.objectInputStream = new ObjectInputStream(serverSocket.getInputStream());
 				break;
 			} catch (IOException e) {
 				close();
