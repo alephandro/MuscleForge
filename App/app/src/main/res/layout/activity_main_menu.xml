@@ -15,7 +15,7 @@
         android:textSize="24sp" />
 
     <Button
-        android:id="@+id/buttonViewTrainings"
+        android:id="@+id/viewWorkoutsButton"
         android:layout_width="200dp"
         android:layout_height="80dp"
         android:layout_marginBottom="20dp"
@@ -24,22 +24,12 @@
         android:textSize="18sp" />
 
     <Button
-        android:id="@+id/buttonAddTraining"
+        android:id="@+id/viewExercisesButton"
         android:layout_width="200dp"
         android:layout_height="80dp"
-        android:layout_below="@id/buttonViewTrainings"
-        android:text="Añadir Ejercicio"
+        android:layout_below="@id/viewWorkoutsButton"
         android:layout_centerHorizontal="true"
-        android:textSize="18sp"
-        android:layout_marginBottom="20dp"/>
-
-    <Button
-        android:id="@+id/buttonDeleteTraining"
-        android:layout_width="200dp"
-        android:layout_height="80dp"
-        android:text="Eliminar Ejercicio"
-        android:layout_centerHorizontal="true"
-        android:textSize="18sp"
-        android:layout_below="@id/buttonAddTraining"/>
+        android:text="Consultar Ejercicios"
+        android:textSize="18sp" />
 
 </RelativeLayout>

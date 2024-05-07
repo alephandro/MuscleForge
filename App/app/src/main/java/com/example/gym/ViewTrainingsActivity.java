@@ -11,8 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gym.utils.Client;
 import com.example.gym.utils.Exercise;
-import com.example.gym.utils.ExerciseStorage;
 import com.example.gym.utils.ExerciseAdapter;
+import com.example.gym.utils.ExerciseStorage;
+import com.example.gym.utils.OldExerciseAdapter;
 import com.example.gym.utils.Workout;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class ViewTrainingsActivity extends AppCompatActivity {
     private Workout workout;
     RecyclerView recyclerView;
     List exercises = new ArrayList<>();
-    ExerciseAdapter adapter;
+    OldExerciseAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +62,10 @@ public class ViewTrainingsActivity extends AppCompatActivity {
         });
 
 
-        adapter = new ExerciseAdapter(exercises);
+        adapter = new OldExerciseAdapter(exercises);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new ExerciseAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new OldExerciseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Exercise exercise) {
                 // Abrir la nueva actividad cuando se hace clic en un elemento de la lista

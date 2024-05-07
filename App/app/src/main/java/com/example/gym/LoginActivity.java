@@ -32,8 +32,9 @@ public class LoginActivity extends AppCompatActivity {
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, MainMenuActivity.class));
 
-                EditText editTextEmail = findViewById(R.id.editTextEmail);
+                /*EditText editTextEmail = findViewById(R.id.editTextEmail);
                 EditText editTextPassword = findViewById(R.id.editTextPassword);
 
                 String email = editTextEmail.getText().toString();
@@ -60,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(bool)
                     startActivity(new Intent(LoginActivity.this, MainMenuActivity.class));
                 else
-                    Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show();*/
             }
         });
     }

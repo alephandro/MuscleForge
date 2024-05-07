@@ -35,7 +35,8 @@ public class NewExerciseActivity extends AppCompatActivity {
                 exercise = new Exercise(
                         nameEditText.getText().toString(),
                         muscleGroupEditText.getText().toString(),
-                        descriptionEditText.getText().toString());
+                        descriptionEditText.getText().toString(),
+                        false);
 
                 ArrayList<Exercise> exercises = ExerciseStorage.getExercises(NewExerciseActivity.this);
                 if(exercises == null)
@@ -43,7 +44,7 @@ public class NewExerciseActivity extends AppCompatActivity {
                 exercises.add(exercise);
                 ExerciseStorage.saveExercises(NewExerciseActivity.this, exercises);
 
-                startActivity(new Intent(NewExerciseActivity.this, MainMenuActivity.class));
+                startActivity(new Intent(NewExerciseActivity.this, ViewExercisesActivity.class));
                 finish();
             }
         });

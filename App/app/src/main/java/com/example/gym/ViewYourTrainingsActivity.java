@@ -1,25 +1,17 @@
 package com.example.gym;
 
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gym.utils.Exercise;
-import com.example.gym.utils.ExerciseAdapter;
 import com.example.gym.utils.ExerciseStorage;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ViewYourTrainingsActivity extends AppCompatActivity {
 

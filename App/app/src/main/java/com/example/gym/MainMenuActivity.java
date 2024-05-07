@@ -14,29 +14,35 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        Button buttonAddTraining = findViewById(R.id.buttonAddTraining);
-        Button buttonViewTrainings = findViewById(R.id.buttonViewTrainings);
-        Button buttonDeleteTraining = findViewById(R.id.buttonDeleteTraining);
+        Button viewWorkoutsButton = findViewById(R.id.viewWorkoutsButton);
+        Button viewExercisesButton = findViewById(R.id.viewExercisesButton);
 
-        buttonAddTraining.setOnClickListener(new View.OnClickListener() {
+        /*buttonAddTraining.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainMenuActivity.this, NewExerciseActivity.class));
             }
-        });
+        });*/
 
-        buttonViewTrainings.setOnClickListener(new View.OnClickListener() {
+        viewWorkoutsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainMenuActivity.this, ConsultHistoryActivity.class));
             }
         });
 
-        buttonDeleteTraining.setOnClickListener(new View.OnClickListener() {
+        viewExercisesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainMenuActivity.this, ViewExercisesActivity.class));
+            }
+        });
+
+        /*buttonDeleteTraining.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainMenuActivity.this, ViewYourTrainingsActivity.class));
             }
-        });
+        });*/
     }
 }
