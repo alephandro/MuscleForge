@@ -70,6 +70,8 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
         public void bind(Exercise exercise) {
             name.setText(exercise.getName());
             muscleGroup.setText(exercise.getMuscleGroup());
+            if(exercise.isDefault())
+                deleteButton.setVisibility(View.GONE);
         }
     }
 
