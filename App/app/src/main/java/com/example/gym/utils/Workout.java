@@ -10,11 +10,13 @@ public class Workout implements Serializable {
 
     private String name;
     private Date date;
+    private long id;
 
     private ArrayList<PerformedExercise> performedExercises;
 
     public Workout() {
         this.date = new Date();
+        this.id = date.getTime();
         this.name = "Entrenamiento " + date.toString().substring(0, 10) + " " + date.toString().substring(30, 34);
         this.performedExercises = new ArrayList<>();
     }
@@ -51,6 +53,10 @@ public class Workout implements Serializable {
         return date;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public ArrayList<PerformedExercise> getPerformedExercises() {
         return performedExercises;
     }
@@ -58,7 +64,7 @@ public class Workout implements Serializable {
     @Override
     public boolean equals(@Nullable Object obj) {
         if(obj instanceof Workout workout) {
-            return workout.getDate().equals(this.date);
+            return workout.getId() ==  this.getId();
         } else
             return super.equals(obj);
     }
