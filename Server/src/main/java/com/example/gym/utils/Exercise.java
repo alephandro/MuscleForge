@@ -1,5 +1,7 @@
 package com.example.gym.utils;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 public class Exercise implements Serializable, Comparable {
