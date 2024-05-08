@@ -17,17 +17,11 @@ public class MainMenuActivity extends AppCompatActivity {
         Button viewWorkoutsButton = findViewById(R.id.viewWorkoutsButton);
         Button viewExercisesButton = findViewById(R.id.viewExercisesButton);
 
-        /*buttonAddTraining.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainMenuActivity.this, NewExerciseActivity.class));
-            }
-        });*/
-
         viewWorkoutsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainMenuActivity.this, ConsultHistoryActivity.class));
+                finish();
             }
         });
 
@@ -35,14 +29,8 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainMenuActivity.this, ViewExercisesActivity.class));
+                finish();
             }
         });
-
-        /*buttonDeleteTraining.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainMenuActivity.this, ViewYourTrainingsActivity.class));
-            }
-        });*/
     }
 }

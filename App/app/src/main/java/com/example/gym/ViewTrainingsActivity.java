@@ -59,6 +59,7 @@ public class ViewTrainingsActivity extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(ViewTrainingsActivity.this, WorkoutActivity.class));
                 finish();
             }
         });

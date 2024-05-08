@@ -101,6 +101,19 @@ public class DetailedExerciseActivity extends AppCompatActivity {
             }
         });
 
+        Button cancelButton = findViewById(id.buttonCancel);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailedExerciseActivity.this,
+                        WorkoutActivity.class);
+                workout.addPerformedExercise(performedExercise);
+                intent.putExtra("workout", workout);
+                startActivity(intent);
+                finish();
+            }
+        });
+
     }
 
     private void addSeries(@Nullable String series, @Nullable String weight) {

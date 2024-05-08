@@ -25,7 +25,8 @@ public class LoginActivity extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish(); // Regresar a la actividad anterior
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
             }
         });
 
@@ -56,8 +57,10 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
 
-                if(bool)
+                if(bool) {
                     startActivity(new Intent(LoginActivity.this, MainMenuActivity.class));
+                    finish();
+                }
                 else
                     Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show();
             }

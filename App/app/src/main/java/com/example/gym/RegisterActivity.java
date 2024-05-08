@@ -26,6 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                 finish();
             }
         });
@@ -55,8 +56,10 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 }
 
-                if(bool)
+                if(bool) {
                     startActivity(new Intent(RegisterActivity.this, MainMenuActivity.class));
+                    finish();
+                }
                 else
                     Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_SHORT).show();
             }

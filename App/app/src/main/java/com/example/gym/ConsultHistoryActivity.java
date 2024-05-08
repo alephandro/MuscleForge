@@ -55,6 +55,7 @@ public class ConsultHistoryActivity extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(ConsultHistoryActivity.this, MainMenuActivity.class));
                 finish();
             }
         });

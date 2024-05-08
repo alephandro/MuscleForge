@@ -81,6 +81,7 @@ public class ViewExercisesActivity extends AppCompatActivity implements Exercise
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(ViewExercisesActivity.this, MainMenuActivity.class));
                 finish();
             }
         });
@@ -88,8 +89,9 @@ public class ViewExercisesActivity extends AppCompatActivity implements Exercise
 
     @Override
     public void onDeleteClick(int position) {
+        Exercise exercise = exercises.get(position);
         exercises.remove(position);
-        localExercises.remove(position);
+        localExercises.remove(exercise);
         ExerciseStorage.saveExercises(this, localExercises);
         adapter.notifyItemRemoved(position);
     }
