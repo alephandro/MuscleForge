@@ -24,14 +24,21 @@ public class NewExerciseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_exercise);
 
+        EditText nameEditText = findViewById(R.id.editTextName);
+        EditText muscleGroupEditText = findViewById(R.id.editTextMuscleGroup);
+        EditText descriptionEditText = findViewById(R.id.editTextDescription);
+
+        exercise = (Exercise) getIntent().getSerializableExtra("exercise");
+        if(exercise != null) {
+            nameEditText.setText(exercise.getName());
+            muscleGroupEditText.setText(exercise.getMuscleGroup());
+            descriptionEditText.setText(exercise.getDescription());
+        }
+
         Button saveButton = findViewById(R.id.buttonSave);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText nameEditText = findViewById(R.id.editTextName);
-                EditText muscleGroupEditText = findViewById(R.id.editTextMuscleGroup);
-                EditText descriptionEditText = findViewById(R.id.editTextDescription);
-
                 exercise = new Exercise(
                         nameEditText.getText().toString(),
                         muscleGroupEditText.getText().toString(),

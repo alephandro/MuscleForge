@@ -13,6 +13,7 @@ import com.example.gym.utils.Client;
 import com.example.gym.utils.Exercise;
 import com.example.gym.utils.ExerciseAdapter;
 import com.example.gym.utils.ExerciseStorage;
+import com.example.gym.utils.Workout;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,6 +53,17 @@ public class ViewExercisesActivity extends AppCompatActivity implements Exercise
         //Set the adapter
         adapter = new ExerciseAdapter(exercises, this);
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new ExerciseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Exercise exercise) {
+                Intent intent = new Intent(
+                        ViewExercisesActivity.this,
+                        NewExerciseActivity.class);
+                intent.putExtra("exercise", exercise);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         //Add button
         Button addButton = findViewById(R.id.addButton);

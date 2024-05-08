@@ -16,28 +16,46 @@ import java.util.ArrayList;
 public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolder> {
 
     private ArrayList<Exercise> exercises;
-    private OnDeleteClickListener listener;
+    private OnDeleteClickListener onDeleteClickListener;
+    private OnItemClickListener onItemClickListener;
+
 
     public ExerciseAdapter(ArrayList<Exercise> exercises, OnDeleteClickListener listener) {
         this.exercises = exercises;
-        this.listener = listener;
+        this.onDeleteClickListener = listener;
     }
 
     public interface OnDeleteClickListener {
         void onDeleteClick(int position);
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(Exercise exercise);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
     @NonNull
     @Override
     public ExerciseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.exercise, parent, false);
-        return new ExerciseViewHolder(view, listener);
+        return new ExerciseViewHolder(view, onDeleteClickListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ExerciseViewHolder holder, int position) {
         Exercise exercise = exercises.get(position);
         holder.bind(exercise);
+        if(!exercise.isDefault()) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.onItemClick(exercise);
+                }
+            });
+        }
     }
 
     @Override

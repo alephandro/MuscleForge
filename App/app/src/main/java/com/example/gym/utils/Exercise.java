@@ -35,7 +35,7 @@ public class Exercise implements Serializable, Comparable {
     @Override
     public int compareTo(Object o) {
         if(o instanceof Exercise e)
-            return this.name.compareTo(e.name);
+            return this.name.toLowerCase().compareTo(e.name.toLowerCase());
         return 0;
     }
 }
