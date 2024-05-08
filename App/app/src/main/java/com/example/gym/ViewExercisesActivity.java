@@ -20,6 +20,7 @@ import java.util.Collections;
 
 public class ViewExercisesActivity extends AppCompatActivity implements ExerciseAdapter.OnDeleteClickListener {
 
+    ArrayList<Exercise> localExercises = new ArrayList<>();
     ArrayList<Exercise> exercises = new ArrayList<>();
     RecyclerView recyclerView;
     ExerciseAdapter adapter;
@@ -43,9 +44,9 @@ public class ViewExercisesActivity extends AppCompatActivity implements Exercise
             this.exercises.addAll((ArrayList) object);
 
         //Get exercises from local storage
-        ArrayList<Exercise> myExercises = ExerciseStorage.getExercises(ViewExercisesActivity.this);
-        if(myExercises != null)
-            this.exercises.addAll(myExercises);
+        localExercises = ExerciseStorage.getExercises(ViewExercisesActivity.this);
+        if(localExercises != null)
+            this.exercises.addAll(localExercises);
 
         //Sort exercises by alphabetical order
         Collections.sort(exercises);
@@ -88,7 +89,8 @@ public class ViewExercisesActivity extends AppCompatActivity implements Exercise
     @Override
     public void onDeleteClick(int position) {
         exercises.remove(position);
-        ExerciseStorage.saveExercises(this, exercises);
+        localExercises.remove(position);
+        ExerciseStorage.saveExercises(this, localExercises);
         adapter.notifyItemRemoved(position);
     }
 }

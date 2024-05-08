@@ -17,6 +17,7 @@ import com.example.gym.utils.OldExerciseAdapter;
 import com.example.gym.utils.Workout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ViewTrainingsActivity extends AppCompatActivity {
@@ -51,6 +52,7 @@ public class ViewTrainingsActivity extends AppCompatActivity {
 
             this.exercises.addAll(myExercises);
         }
+        Collections.sort(exercises);
 
         Button buttonBack = findViewById(R.id.buttonBack);
 
