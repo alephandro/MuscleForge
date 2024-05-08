@@ -48,6 +48,14 @@ public class NewExerciseActivity extends AppCompatActivity {
                 ArrayList<Exercise> exercises = ExerciseStorage.getExercises(NewExerciseActivity.this);
                 if(exercises == null)
                     exercises = new ArrayList<>();
+                if(exercise != null) {
+                    for (Exercise e : exercises) {
+                        if(e.equals(exercise)) {
+                            exercises.remove(e);
+                            break;
+                        }
+                    }
+                }
                 exercises.add(exercise);
                 ExerciseStorage.saveExercises(NewExerciseActivity.this, exercises);
 

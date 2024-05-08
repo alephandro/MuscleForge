@@ -1,5 +1,7 @@
 package com.example.gym.utils;
 
+import androidx.annotation.Nullable;
+
 import java.io.Serializable;
 
 public class Exercise implements Serializable, Comparable {
@@ -30,6 +32,13 @@ public class Exercise implements Serializable, Comparable {
 
     public boolean isDefault() {
         return isDefault;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(obj instanceof Exercise exercise)
+            return this.name.equals(exercise.name);
+        return super.equals(obj);
     }
 
     @Override

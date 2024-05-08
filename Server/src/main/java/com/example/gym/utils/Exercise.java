@@ -33,6 +33,13 @@ public class Exercise implements Serializable, Comparable {
 	}
 
 	@Override
+	public boolean equals(@Nullable Object obj) {
+		if(obj instanceof Exercise exercise)
+			return this.name.equals(exercise.name);
+		return super.equals(obj);
+	}
+
+	@Override
 	public int compareTo(Object o) {
 		if(o instanceof Exercise e)
 			return this.name.toLowerCase().compareTo(e.name.toLowerCase());
