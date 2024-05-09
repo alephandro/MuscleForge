@@ -107,7 +107,8 @@ public class DetailedExerciseActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(DetailedExerciseActivity.this,
                         WorkoutActivity.class);
-                workout.addPerformedExercise(performedExercise);
+                if(performedExercise != null)
+                    workout.addPerformedExercise(performedExercise);
                 intent.putExtra("workout", workout);
                 startActivity(intent);
                 finish();
