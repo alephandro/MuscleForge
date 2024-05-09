@@ -60,11 +60,6 @@ public class Server {
 					throw new RuntimeException(e);
 				}
 
-                try {
-                    NetworkVariables.updateDomain();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
                 backupHandler.connectToBackupServer();
 				backupHandler.saveDatabase();
 				backupHandler.close();
